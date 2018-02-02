@@ -87,7 +87,6 @@ public class TesterCoba {
 //        
 //        img.setPixelValue(x1, y1, r1, g1, b1);
 //        img.createImage();
-        
 //        Scanner sc = new Scanner(System.in);
 //        System.out.print("Path: ");
 //        String filePath = sc.nextLine();
@@ -109,7 +108,6 @@ public class TesterCoba {
 //                System.out.println("blue: "+pixel[i]+"\n");
 //            }
 //        }
-
         //lsb tester
         Scanner sc = new Scanner(System.in);
         System.out.print("Secret data: ");
@@ -123,12 +121,13 @@ public class TesterCoba {
         System.out.println("width: " + lsb.coverImage.getImgWidth());
         System.out.println("height: " + lsb.coverImage.getImgHeight());
         System.out.println();
-//
+
 //        System.out.println("Pixel value before lsb: ");
 //        int[] pixel = lsb.coverImage.getPixels(lsb.coverImage.coverImage);
 //        int nopixel = 0;
 //        int count = 0;
 //        for (int i = 0; i < pixel.length; i++) {
+//            System.out.println(nopixel);
 //            if (i % 3 == 0) {
 //                System.out.println("red: " + pixel[i]);
 //            } else if (i % 3 == 1) {
@@ -140,30 +139,21 @@ public class TesterCoba {
 //                count++;
 //            } else {
 //                count = 0;
-//                nopixel++;
-//                System.out.println(nopixel);
+//                nopixel++;                
 //            }
 //        }
+        System.out.println();
 
         lsb.hideSecretData();
         System.out.println("Pixel value after lsb: ");
         int[] pixelafter = lsb.coverImage.getPixels(lsb.coverImage.coverImage);
-        int nopixel1 = 0;
-        int count1 = 0;
         for (int i = 0; i < pixelafter.length; i++) {
-            System.out.println(nopixel1);
             if (i % 3 == 0) {
                 System.out.println("red: " + pixelafter[i]);
             } else if (i % 3 == 1) {
                 System.out.println("green: " + pixelafter[i]);
             } else {
                 System.out.println("blue: " + pixelafter[i] + "\n");
-            }
-            if (count1 < 2) {
-                count1++;
-            } else {
-                count1 = 0;
-                nopixel1++;
             }
         }
 

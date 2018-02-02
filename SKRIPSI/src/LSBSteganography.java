@@ -25,7 +25,7 @@ public class LSBSteganography extends Steganography {
         int x = 0;
         int y = 0;
         int[] pixel = this.coverImage.getPixels(this.coverImage.coverImage);
-        while (i < scrt.length()) {
+        while (i < scrt.length()-2) {
             //red
             if (pixel[i] % 2 == 0) {
                 if (scrt.charAt(i) == '1') {
