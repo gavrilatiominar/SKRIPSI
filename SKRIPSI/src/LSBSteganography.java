@@ -76,12 +76,12 @@ public class LSBSteganography extends Steganography {
                 x += 1;
             }
             
-//            try {
-//                this.coverImage.setPixelValue(x, y, pixel[i], pixel[i+1], pixel[i+2]);
-//            } catch (IOException ex) {
-//                Logger.getLogger(LSBSteganography.class.getName()).log(Level.SEVERE, null, ex);
-//            }            
-//            i += 3;            
+            try {
+                this.coverImage.setPixelValue(x, y, pixel[i], pixel[i+1], pixel[i+2]);
+            } catch (IOException ex) {
+                Logger.getLogger(LSBSteganography.class.getName()).log(Level.SEVERE, null, ex);
+            }            
+            i += 3;            
         }
 
     }
