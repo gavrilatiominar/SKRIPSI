@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author Gavrila Sianturi
  */
 public class PITSteganography extends Steganography {
-
+    
     public PITSteganography(String secretData, String coverImagePath) throws IOException {
         super(secretData, coverImagePath);
     }
@@ -30,7 +30,7 @@ public class PITSteganography extends Steganography {
         } else {
             return true;
         }
-    }
+    }   
 
     @Override
     public void hideSecretData() {
