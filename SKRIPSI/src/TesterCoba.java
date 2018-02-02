@@ -15,19 +15,19 @@ public class TesterCoba {
 
     public static void main(String[] args) throws IOException {
         //binary converter tester
-        Scanner sc = new Scanner(System.in);
-        String scrt = sc.nextLine();
-        String path = sc.nextLine();
-        PITSteganography s = new PITSteganography(scrt, path);
-        System.out.println(s.secretDataToBinary());
-        
-        if(s.oddParity()){
-            System.out.println("ODD");
-        } else {
-            System.out.println("EVEN");
-        }
-        System.out.println("Convert to text");
-        System.out.println(s.binaryToSecretData(s.secretDataToBinary()));
+//        Scanner sc = new Scanner(System.in);
+//        String scrt = sc.nextLine();
+//        String path = sc.nextLine();
+//        PITSteganography s = new PITSteganography(scrt, path);
+//        System.out.println(s.secretDataToBinary());
+//        
+//        if(s.oddParity()){
+//            System.out.println("ODD");
+//        } else {
+//            System.out.println("EVEN");
+//        }
+//        System.out.println("Convert to text");
+//        System.out.println(s.binaryToSecretData(s.secretDataToBinary()));
 
         //image processor tester
 //        Scanner sc = new Scanner(System.in);
@@ -111,18 +111,18 @@ public class TesterCoba {
 //        }
 
         //lsb tester
-//        Scanner sc = new Scanner(System.in);
-//        System.out.print("Secret data: ");
-//        String scrt = sc.nextLine();
-//        System.out.println();
-//        System.out.print("Path: ");
-//        String path = sc.nextLine();
-//        System.out.println();
-//
-//        LSBSteganography lsb = new LSBSteganography(scrt, path);
-//        System.out.println("width: " + lsb.coverImage.getImgWidth());
-//        System.out.println("height: " + lsb.coverImage.getImgHeight());
-//        System.out.println();
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Secret data: ");
+        String scrt = sc.nextLine();
+        System.out.println();
+        System.out.print("Path: ");
+        String path = sc.nextLine();
+        System.out.println();
+
+        LSBSteganography lsb = new LSBSteganography(scrt, path);
+        System.out.println("width: " + lsb.coverImage.getImgWidth());
+        System.out.println("height: " + lsb.coverImage.getImgHeight());
+        System.out.println();
 //
 //        System.out.println("Pixel value before lsb: ");
 //        int[] pixel = lsb.coverImage.getPixels(lsb.coverImage.coverImage);
@@ -145,27 +145,27 @@ public class TesterCoba {
 //            }
 //        }
 
-//        lsb.hideSecretData();
-//        System.out.println("Pixel value after lsb: ");
-//        int[] pixelafter = lsb.coverImage.getPixels(lsb.coverImage.coverImage);
-//        int nopixel1 = 0;
-//        int count1 = 0;
-//        for (int i = 0; i < pixelafter.length; i++) {
-//            System.out.println(nopixel1);
-//            if (i % 3 == 0) {
-//                System.out.println("red: " + pixelafter[i]);
-//            } else if (i % 3 == 1) {
-//                System.out.println("green: " + pixelafter[i]);
-//            } else {
-//                System.out.println("blue: " + pixelafter[i] + "\n");
-//            }
-//            if (count1 < 2) {
-//                count++;
-//            } else {
-//                count1 = 0;
-//                nopixel1++;
-//            }
-//        }
+        lsb.hideSecretData();
+        System.out.println("Pixel value after lsb: ");
+        int[] pixelafter = lsb.coverImage.getPixels(lsb.coverImage.coverImage);
+        int nopixel1 = 0;
+        int count1 = 0;
+        for (int i = 0; i < pixelafter.length; i++) {
+            System.out.println(nopixel1);
+            if (i % 3 == 0) {
+                System.out.println("red: " + pixelafter[i]);
+            } else if (i % 3 == 1) {
+                System.out.println("green: " + pixelafter[i]);
+            } else {
+                System.out.println("blue: " + pixelafter[i] + "\n");
+            }
+            if (count1 < 2) {
+                count1++;
+            } else {
+                count1 = 0;
+                nopixel1++;
+            }
+        }
 
         //pit tester
 //        Scanner sc = new Scanner(System.in);
