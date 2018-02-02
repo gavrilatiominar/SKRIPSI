@@ -6,17 +6,40 @@ import java.io.IOException;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Gavrila Sianturi
  */
 public class PITSteganography extends Steganography {
-    
+
     public PITSteganography(String secretData, String coverImagePath) throws IOException {
         super(secretData, coverImagePath);
     }
+
+    public boolean isEven() {
+        if (this.secretDataLength % 2 == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
+    public boolean isPrime(){
+        int count = 0;
+        for (int i = 1; i <= this.secretDataLength; i++) {
+            if(this.secretDataLength%i==0){
+                count++;
+            } else{
+                count=count;
+            }
+        }
+        if(count==2){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public boolean oddParity() {
         String size = Integer.toBinaryString(secretDataLength);
         int count = 0;
@@ -30,7 +53,7 @@ public class PITSteganography extends Steganography {
         } else {
             return true;
         }
-    }   
+    }
 
     @Override
     public void hideSecretData() {
