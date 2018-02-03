@@ -21,71 +21,33 @@ public class LSBSteganography extends Steganography {
     @Override
     public void hideSecretData() {
         String scrt = this.secretDataToBinary();
-        int i = 0;
         int x = 0;
         int y = 0;
-        int[] pixel = this.coverImage.getPixels(this.coverImage.coverImage);
-        while (i < scrt.length()-2) {
-            //red
-            if (pixel[i] % 2 == 0) {
-                if (scrt.charAt(i) == '1') {
-                    pixel[i] = pixel[i] + 1;
-                } else {
-                    pixel[i] = pixel[i];
-                }
-            } else {
-                if (scrt.charAt(i) == '0') {
-                    pixel[i] = pixel[i] - 1;
-                } else {
-                    pixel[i] = pixel[i];
-                }
-            }
-            //green
-            if (pixel[i + 1] % 2 == 0) {
-                if (scrt.charAt(i + 1) == '1') {
-                    pixel[i + 1] = pixel[i + 1] + 1;
-                } else {
-                    pixel[i + 1] = pixel[i + 1];
-                }
-            } else {
-                if (scrt.charAt(i + 1) == '0') {
-                    pixel[i + 1] = pixel[i + 1] - 1;
-                } else {
-                    pixel[i + 1] = pixel[i + 1];
-                }
-            }
-            //blue
-            if (pixel[i + 2] % 2 == 0) {
-                if (scrt.charAt(i + 2) == '1') {
-                    pixel[i + 2] = pixel[i + 2] + 1;
-                } else {
-                    pixel[i + 2] = pixel[i + 2];
-                }
-            } else {
-                if (scrt.charAt(i + 2) == '0') {
-                    pixel[i + 2] = pixel[i + 2] - 1;
-                } else {
-                    pixel[i + 2] = pixel[i + 2];
-                }
-            }
-
-            if (x > this.coverImage.getImgWidth()) {
-                x = 0;
-                y += 1;
-            } else {
-                x += 1;
-            }
-            
+        for (int i = 0; i < scrt.length(); i++) {
+            byte r = (byte) this.coverImage.getRedValue(x, y);
+            byte g = (byte) this.coverImage.getGreenValue(x, y);
+            byte b = (byte) this.coverImage.getBlueValue(x, y);
+            int bit1 = (int) scrt.charAt(i);
+            int bit2 = (int) scrt.charAt(i + 1);
+            int bit3 = (int) scrt.charAt(i + 2);
+            r = (byte) ((r & 0xFE) | bit1);
+            g = (byte) ((g & 0xFE) | bit2);
+            b = (byte) ((b & 0xFE) | bit3);
             try {
-                this.coverImage.setPixelValue(x, y, pixel[i], pixel[i+1], pixel[i+2]);
+                this.coverImage.setPixelValue(x, y, r, g, b);
             } catch (IOException ex) {
                 Logger.getLogger(LSBSteganography.class.getName()).log(Level.SEVERE, null, ex);
-            }            
-            i += 3;            
+            }
+            if (x < this.coverImage.getImgWidth()) {
+                x++;
+            } else {
+                x = 0;
+                y++;
+            }
+            i += 3;
         }
-
     }
-    
+
     @Override
     public void extractSecretData() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

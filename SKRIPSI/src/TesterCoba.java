@@ -108,7 +108,6 @@ public class TesterCoba {
 //                System.out.println("blue: "+pixel[i]+"\n");
 //            }
 //        }
-       
         //pit tester
 //        Scanner sc = new Scanner(System.in);
 //        System.out.print("Secret data: ");
@@ -121,5 +120,48 @@ public class TesterCoba {
 //        PITSteganography pit = new PITSteganography(scrt, path);
 //        System.out.println(pit.isEven());
 //        System.out.println(pit.isPrime());
+        //lsb tester
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Secret Data: ");
+        String secret = sc.nextLine();
+        System.out.print("Path: ");
+        String filePath = sc.nextLine();
+        System.out.println();
+
+        LSBSteganography lsb = new LSBSteganography(secret, filePath);
+        System.out.println("width: " + lsb.coverImage.getImgWidth());
+        System.out.println("height: " + lsb.coverImage.getImgHeight());
+        System.out.println();
+
+        int[] pixelAwal = lsb.coverImage.getPixels(lsb.coverImage.coverImage);
+        for (int i = 0; i < pixelAwal.length; i++) {
+            if (i % 3 == 0) {
+                System.out.println("red: " + pixelAwal[i]);
+            } else if (i % 3 == 1) {
+                System.out.println("green: " + pixelAwal[i]);
+            } else {
+                System.out.println("blue: " + pixelAwal[i] + "\n");
+            }
+        } 
+        System.out.println();
+        
+        lsb.hideSecretData();
+        lsb.coverImage.createImage();
+
+        System.out.print("Path: ");
+        String filePathAfter = sc.nextLine();
+        System.out.println();
+
+        ImageProcessor img = new ImageProcessor(filePathAfter);
+        int[] pixel = img.getPixels(img.coverImage);
+        for (int i = 0; i < pixel.length; i++) {
+            if (i % 3 == 0) {
+                System.out.println("red: " + pixel[i]);
+            } else if (i % 3 == 1) {
+                System.out.println("green: " + pixel[i]);
+            } else {
+                System.out.println("blue: " + pixel[i] + "\n");
+            }
+        }        
     }
 }
