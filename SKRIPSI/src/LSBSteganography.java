@@ -85,10 +85,9 @@ public class LSBSteganography extends Steganography {
         }
 
     }
-
+    
     @Override
     public void extractSecretData() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }
