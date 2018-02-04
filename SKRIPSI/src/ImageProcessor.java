@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -34,20 +35,44 @@ public class ImageProcessor {
 
     public int getRedValue(int x, int y) {
         int pixel = this.coverImage.getRGB(x, y);
-        int r = (pixel >> 16) & 0xff;
-        return r;
+        Color c = new Color(pixel);
+//        int r = (pixel >> 16) & 0xff;
+        return c.getRed();
     }
 
     public int getGreenValue(int x, int y) {
         int pixel = this.coverImage.getRGB(x, y);
-        int g = (pixel >> 8) & 0xff;
-        return g;
+        Color c = new Color(pixel);
+//        int g = (pixel >> 8) & 0xff;
+        return c.getGreen();
     }
 
     public int getBlueValue(int x, int y) {
         int pixel = this.coverImage.getRGB(x, y);
-        int b = pixel & 0xff;
-        return b;
+        Color c = new Color(pixel);
+//        int b = pixel & 0xff;
+        return c.getBlue();
+    }
+
+    public void setRedValue(int r, int x, int y) {
+        int g = this.getGreenValue(x, y);
+        int b = this.getBlueValue(x, y);
+        int pixel = (r << 16) | (g << 8) | b;
+        this.coverImage.setRGB(x, y, pixel);
+    }
+    
+    public void setGreenValue(int g, int x, int y) {
+        int r = this.getRedValue(x, y);
+        int b = this.getBlueValue(x, y);
+        int pixel = (r << 16) | (g << 8) | b;
+        this.coverImage.setRGB(x, y, pixel);
+    }
+    
+    public void setBlueValue(int b, int x, int y) {
+        int r = this.getRedValue(x, y);
+        int g = this.getGreenValue(x, y);
+        int pixel = (r << 16) | (g << 8) | b;
+        this.coverImage.setRGB(x, y, pixel);
     }
 
     public void setPixelValue(int x, int y, int red, int green, int blue) throws IOException {

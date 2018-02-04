@@ -24,27 +24,46 @@ public class LSBSteganography extends Steganography {
         int x = 0;
         int y = 0;
         for (int i = 0; i < scrt.length(); i++) {
-            byte r = (byte) this.coverImage.getRedValue(x, y);
-            byte g = (byte) this.coverImage.getGreenValue(x, y);
-            byte b = (byte) this.coverImage.getBlueValue(x, y);
-            int bit1 = (int) scrt.charAt(i);
-            int bit2 = (int) scrt.charAt(i + 1);
-            int bit3 = (int) scrt.charAt(i + 2);
-            r = (byte) ((r & 0xFE) | bit1);
-            g = (byte) ((g & 0xFE) | bit2);
-            b = (byte) ((b & 0xFE) | bit3);
-            try {
-                this.coverImage.setPixelValue(x, y, r, g, b);
-            } catch (IOException ex) {
-                Logger.getLogger(LSBSteganography.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (x < this.coverImage.getImgWidth()) {
-                x++;
+            if (i % 3 == 0) {
+                int r = this.coverImage.getRedValue(x, y);
+                if (r % 2 == 0) {
+                    if (scrt.charAt(i) == '1') {
+                        this.coverImage.setRedValue(r + 1, x, y);
+                    }
+                } else {
+                    if (scrt.charAt(i) == '0') {
+                        this.coverImage.setRedValue(r - 1, x, y);
+                    }
+                }
+            } else if (i % 3 == 1) {
+                int g = this.coverImage.getGreenValue(x, y);
+                if (g % 2 == 0) {
+                    if (scrt.charAt(i) == '1') {
+                        this.coverImage.setGreenValue(g + 1, x, y);
+                    }
+                } else {
+                    if (scrt.charAt(i) == '0') {
+                        this.coverImage.setGreenValue(g - 1, x, y);
+                    }
+                }
             } else {
-                x = 0;
-                y++;
+                int b = this.coverImage.getBlueValue(x, y);
+                if (b % 2 == 0) {
+                    if (scrt.charAt(i) == '1') {
+                        this.coverImage.setBlueValue(b + 1, x, y);
+                    }
+                } else {
+                    if (scrt.charAt(i) == '0') {
+                        this.coverImage.setBlueValue(b - 1, x, y);
+                    }
+                }
+                if (x < this.coverImage.getImgWidth()) {
+                    x++;
+                } else {
+                    x = 0;
+                    y++;
+                }
             }
-            i += 3;
         }
     }
 

@@ -38,23 +38,22 @@ public class TesterCoba {
 //        ImageProcessor img = new ImageProcessor(filePath);
 //        System.out.println("width: " + img.getImgWidth());
 //        System.out.println("height: " + img.getImgHeight());
-//        
+//
 //        System.out.println();
 //        System.out.print("x: ");
 //        int x = sc.nextInt();
-//        
+//
 //        System.out.print("y: ");
 //        int y = sc.nextInt();
-//        
+//
 //        System.out.println();
-//        
+//
 //        System.out.println("red: " + img.getRedValue(x, y));
 //        System.out.println("green: " + img.getGreenValue(x, y));
 //        System.out.println("blue: " + img.getBlueValue(x, y));
-//        
+//
 //        System.out.println();
-//                
-//        
+
 //        System.out.print("red: ");
 //        int r = sc.nextInt();
 //        System.out.print("green: ");
@@ -63,6 +62,9 @@ public class TesterCoba {
 //        int b = sc.nextInt();
 //        
 //        img.setPixelValue(x, y, r, g, b);
+//        img.setRedValue(r, x, y);
+//        img.setGreenValue(g, x, y);
+//        img.setBlueValue(b, x, y);
 //        
 //        System.out.println("");
 //        
@@ -87,6 +89,8 @@ public class TesterCoba {
 //        
 //        img.setPixelValue(x1, y1, r1, g1, b1);
 //        img.createImage();
+
+        //print semua nilai piksel
 //        Scanner sc = new Scanner(System.in);
 //        System.out.print("Path: ");
 //        String filePath = sc.nextLine();
@@ -96,18 +100,21 @@ public class TesterCoba {
 //        System.out.println("width: " + img.getImgWidth());
 //        System.out.println("height: " + img.getImgHeight());
 //        System.out.println();
-//        
+//
 //        int[] pixel = img.getPixels(img.coverImage); //nyimpennya 0,0 - 1,0 - 2,0 - dst
-//        
+//        int nopixel = 0;
 //        for (int i = 0; i < pixel.length; i++) {
-//            if(i%3==0){
-//                System.out.println("red: "+pixel[i]);
-//            } else if(i%3==1){
-//                System.out.println("green: "+pixel[i]);
+//            if (i % 3 == 0) {
+//                System.out.println(nopixel);
+//                System.out.println("red: " + pixel[i]);
+//            } else if (i % 3 == 1) {
+//                System.out.println("green: " + pixel[i]);
 //            } else {
-//                System.out.println("blue: "+pixel[i]+"\n");
+//                System.out.println("blue: " + pixel[i] + "\n");
+//                nopixel++;
 //            }
 //        }
+
         //pit tester
 //        Scanner sc = new Scanner(System.in);
 //        System.out.print("Secret data: ");
@@ -120,6 +127,7 @@ public class TesterCoba {
 //        PITSteganography pit = new PITSteganography(scrt, path);
 //        System.out.println(pit.isEven());
 //        System.out.println(pit.isPrime());
+
         //lsb tester
         Scanner sc = new Scanner(System.in);
         System.out.print("Secret Data: ");
@@ -134,13 +142,16 @@ public class TesterCoba {
         System.out.println();
 
         int[] pixelAwal = lsb.coverImage.getPixels(lsb.coverImage.coverImage);
+        int nopixel = 0;
         for (int i = 0; i < pixelAwal.length; i++) {
             if (i % 3 == 0) {
+                System.out.println(nopixel);
                 System.out.println("red: " + pixelAwal[i]);
             } else if (i % 3 == 1) {
                 System.out.println("green: " + pixelAwal[i]);
             } else {
                 System.out.println("blue: " + pixelAwal[i] + "\n");
+                nopixel++;
             }
         } 
         System.out.println();
@@ -154,13 +165,16 @@ public class TesterCoba {
 
         ImageProcessor img = new ImageProcessor(filePathAfter);
         int[] pixel = img.getPixels(img.coverImage);
+        int nopixel1 = 0;
         for (int i = 0; i < pixel.length; i++) {
             if (i % 3 == 0) {
+                System.out.println(nopixel1);
                 System.out.println("red: " + pixel[i]);
             } else if (i % 3 == 1) {
                 System.out.println("green: " + pixel[i]);
             } else {
                 System.out.println("blue: " + pixel[i] + "\n");
+                nopixel1++;
             }
         }        
     }
