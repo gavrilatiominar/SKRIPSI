@@ -60,14 +60,14 @@ public class ImageProcessor {
         int pixel = (r << 16) | (g << 8) | b;
         this.coverImage.setRGB(x, y, pixel);
     }
-    
+
     public void setGreenValue(int g, int x, int y) {
         int r = this.getRedValue(x, y);
         int b = this.getBlueValue(x, y);
         int pixel = (r << 16) | (g << 8) | b;
         this.coverImage.setRGB(x, y, pixel);
     }
-    
+
     public void setBlueValue(int b, int x, int y) {
         int r = this.getRedValue(x, y);
         int g = this.getGreenValue(x, y);
@@ -85,9 +85,28 @@ public class ImageProcessor {
         ImageIO.write(coverImage, "bmp", f);
     }
 
-    public int[] getPixels(BufferedImage img) {
-        int iArray[] = null; //An optionally pre-allocated int array
-        int[] pixel = img.getRaster().getPixels(0, 0, img.getWidth(), img.getHeight(), iArray);
+    public int[][][] getPixels(BufferedImage img) {
+//        int iArray[] = null; //An optionally pre-allocated int array
+//        int[] pixel = img.getRaster().getPixels(0, 0, img.getWidth(), img.getHeight(), iArray);
+//        return pixel;
+
+//        int[] pixel;
+//        for (int y = 0; y < img.getHeight(); y++) {
+//            for (int x = 0; x < img.getWidth(); x++) {
+//                pixel = img.getRaster().getPixel(x, y, new int[3]);
+//                System.out.println(pixel[0] + " - " + pixel[1] + " - " + pixel[2] + " - " + (img.getWidth() * y + x));
+//            }
+//        }
+        int[][][] pixel = new int[img.getHeight()][img.getWidth()][3];
+        for (int y = 0; y < img.getHeight(); y++) {
+            for (int x = 0; x < img.getWidth(); x++) {
+                int pxl = img.getRGB(x, y);
+                Color c = new Color(pxl);
+                pixel[y][x][0] = c.getRed();
+                pixel[y][x][1] = c.getGreen();
+                pixel[y][x][2] = c.getBlue();
+            }
+        }
         return pixel;
     }
 }

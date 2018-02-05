@@ -53,7 +53,6 @@ public class Tester {
 //        System.out.println("blue: " + img.getBlueValue(x, y));
 //
 //        System.out.println();
-
 //        System.out.print("red: ");
 //        int r = sc.nextInt();
 //        System.out.print("green: ");
@@ -89,7 +88,6 @@ public class Tester {
 //        
 //        img.setPixelValue(x1, y1, r1, g1, b1);
 //        img.createImage();
-
         //print semua nilai piksel
 //        Scanner sc = new Scanner(System.in);
 //        System.out.print("Path: ");
@@ -114,7 +112,6 @@ public class Tester {
 //                nopixel++;
 //            }
 //        }
-
         //pit tester
 //        Scanner sc = new Scanner(System.in);
 //        System.out.print("Secret data: ");
@@ -127,7 +124,6 @@ public class Tester {
 //        PITSteganography pit = new PITSteganography(scrt, path);
 //        System.out.println(pit.isEven());
 //        System.out.println(pit.isPrime());
-
         //lsb tester
         Scanner sc = new Scanner(System.in);
         System.out.print("Secret Data: ");
@@ -141,21 +137,32 @@ public class Tester {
         System.out.println("height: " + lsb.coverImage.getImgHeight());
         System.out.println();
 
-        int[] pixelAwal = lsb.coverImage.getPixels(lsb.coverImage.coverImage);
+        //lsb.coverImage.getPixels(lsb.coverImage.coverImage);
+        int[][][] pixelAwal = lsb.coverImage.getPixels(lsb.coverImage.coverImage);
         int nopixel = 0;
-        for (int i = 0; i < pixelAwal.length; i++) {
-            if (i % 3 == 0) {
+//        for (int i = 0; i < pixelAwal.length; i++) {
+//            if (i % 3 == 0) {
+//                System.out.println(nopixel);
+//                System.out.println("red: " + pixelAwal[i]);
+//            } else if (i % 3 == 1) {
+//                System.out.println("green: " + pixelAwal[i]);
+//            } else {
+//                System.out.println("blue: " + pixelAwal[i] + "\n");
+//                nopixel++;
+//            }
+//        }
+        for (int y = 0; y < lsb.coverImage.getImgHeight(); y++) {
+            for (int x = 0; x < lsb.coverImage.getImgWidth(); x++) {
                 System.out.println(nopixel);
-                System.out.println("red: " + pixelAwal[i]);
-            } else if (i % 3 == 1) {
-                System.out.println("green: " + pixelAwal[i]);
-            } else {
-                System.out.println("blue: " + pixelAwal[i] + "\n");
+                System.out.println("red: " + pixelAwal[y][x][0]);
+                System.out.println("green: " + pixelAwal[y][x][1]);
+                System.out.println("blue: " + pixelAwal[y][x][2]);
+                System.out.println();
                 nopixel++;
             }
-        } 
+        }
         System.out.println();
-        
+
         lsb.hideSecretData();
         lsb.coverImage.createImage();
 
@@ -164,18 +171,29 @@ public class Tester {
         System.out.println();
 
         ImageProcessor img = new ImageProcessor(filePathAfter);
-        int[] pixel = img.getPixels(img.coverImage);
+        //img.getPixels(img.coverImage);
+        int[][][] pixel = img.getPixels(img.coverImage);
         int nopixel1 = 0;
-        for (int i = 0; i < pixel.length; i++) {
-            if (i % 3 == 0) {
+//        for (int i = 0; i < pixel.length; i++) {
+//            if (i % 3 == 0) {
+//                System.out.println(nopixel1);
+//                System.out.println("red: " + pixel[i]);
+//            } else if (i % 3 == 1) {
+//                System.out.println("green: " + pixel[i]);
+//            } else {
+//                System.out.println("blue: " + pixel[i] + "\n");
+//                nopixel1++;
+//            }
+//        }        
+        for (int y1 = 0; y1 < img.getImgHeight(); y1++) {
+            for (int x1 = 0; x1 < img.getImgWidth(); x1++) {
                 System.out.println(nopixel1);
-                System.out.println("red: " + pixel[i]);
-            } else if (i % 3 == 1) {
-                System.out.println("green: " + pixel[i]);
-            } else {
-                System.out.println("blue: " + pixel[i] + "\n");
+                System.out.println("red: " + pixel[y1][x1][0]);
+                System.out.println("green: " + pixel[y1][x1][1]);
+                System.out.println("blue: " + pixel[y1][x1][2]);
+                System.out.println();
                 nopixel1++;
             }
-        }        
+        }
     }
 }
