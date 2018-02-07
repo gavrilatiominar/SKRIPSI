@@ -91,7 +91,7 @@ public class LSBSteganography extends Steganography {
                 } catch (IOException ex) {
                     Logger.getLogger(LSBSteganography.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                if (x < this.coverImage.getImgWidth()) {
+                if (x < this.coverImage.getImgWidth()-1) {
                     x++;
                 } else {
                     x = 0;
