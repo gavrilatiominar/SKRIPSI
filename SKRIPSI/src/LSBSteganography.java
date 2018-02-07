@@ -53,7 +53,7 @@ public class LSBSteganography extends Steganography {
                 if (g % 2 == 0) {
                     if (scrt.charAt(i) == '1') {
                         //this.coverImage.setGreenValue(g + 1, x, y);
-                        newrgb[1] = g + 1;
+                        newrgb[1] = g + 1;                        
                     } else {
                         newrgb[1] = g;
                     }

@@ -21,7 +21,7 @@ public class ImageProcessor {
 
     public ImageProcessor(String coverImagePath) throws IOException {
         this.coverImagePath = coverImagePath;
-        File f = new File(coverImagePath);
+        File f = new File(coverImagePath);      
         this.coverImage = ImageIO.read(f);
     }
 
