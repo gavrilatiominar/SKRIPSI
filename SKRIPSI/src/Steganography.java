@@ -17,20 +17,27 @@ import javax.imageio.ImageIO;
 public abstract class Steganography {
 
     public String secretData;
-    public ImageProcessor coverImage;
+    public ImageProcessor image;
     public int secretDataLength;
 
-    public Steganography(String secretData, String coverImagePath) throws IOException { //param coverimage
+    public Steganography(String secretData, String imagePath) throws IOException { //param coverimage
         this.secretData = secretData;
-        this.coverImage = new ImageProcessor(coverImagePath);
+        this.image = new ImageProcessor(imagePath);
         this.secretDataLength = secretData.length();
     }
 
     public String secretDataToBinary() {
         String res = "";
-        byte[] bytes = this.secretData.getBytes();
-        for (int i = 0; i < bytes.length; i++) {
-            res = res + 0 + Integer.toBinaryString(bytes[i]);
+        int[] ascii = new int[this.secretDataLength];
+        for (int i = 0; i < ascii.length; i++) {
+            ascii[i] = (int) this.secretData.charAt(i);
+        }
+        for (int i = 0; i < ascii.length; i++) {
+            if (ascii[i] < 64) {
+                res = res + "00" + Integer.toBinaryString(ascii[i]);
+            } else {
+                res = res + 0 + Integer.toBinaryString(ascii[i]);
+            }
         }
         return res;
     }
@@ -48,5 +55,5 @@ public abstract class Steganography {
 
     public abstract void hideSecretData();
 
-    public abstract void extractSecretData();
+    public abstract String extractSecretData(ImageProcessor image);
 }

@@ -61,7 +61,7 @@ public class PITSteganography extends Steganography {
     }
 
     @Override
-    public void extractSecretData() {
+    public String extractSecretData(ImageProcessor image) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -16,39 +16,39 @@ import javax.imageio.ImageIO;
  */
 public class ImageProcessor {
 
-    public BufferedImage coverImage;
-    public String coverImagePath;
+    public BufferedImage img;
+    public String imgPath;
 
-    public ImageProcessor(String coverImagePath) throws IOException {
-        this.coverImagePath = coverImagePath;
-        File f = new File(coverImagePath);      
-        this.coverImage = ImageIO.read(f);
+    public ImageProcessor(String imgPath) throws IOException {
+        this.imgPath = imgPath;
+        File f = new File(imgPath);      
+        this.img = ImageIO.read(f);
     }
 
     public int getImgWidth() {
-        return coverImage.getWidth();
+        return img.getWidth();
     }
 
     public int getImgHeight() {
-        return coverImage.getHeight();
+        return img.getHeight();
     }
 
     public int getRedValue(int x, int y) {
-        int pixel = this.coverImage.getRGB(x, y);
+        int pixel = this.img.getRGB(x, y);
         Color c = new Color(pixel);
 //        int r = (pixel >> 16) & 0xff;
         return c.getRed();
     }
 
     public int getGreenValue(int x, int y) {
-        int pixel = this.coverImage.getRGB(x, y);
+        int pixel = this.img.getRGB(x, y);
         Color c = new Color(pixel);
 //        int g = (pixel >> 8) & 0xff;
         return c.getGreen();
     }
 
     public int getBlueValue(int x, int y) {
-        int pixel = this.coverImage.getRGB(x, y);
+        int pixel = this.img.getRGB(x, y);
         Color c = new Color(pixel);
 //        int b = pixel & 0xff;
         return c.getBlue();
@@ -58,45 +58,34 @@ public class ImageProcessor {
         int g = this.getGreenValue(x, y);
         int b = this.getBlueValue(x, y);
         int pixel = (r << 16) | (g << 8) | b;
-        this.coverImage.setRGB(x, y, pixel);
+        this.img.setRGB(x, y, pixel);
     }
 
     public void setGreenValue(int g, int x, int y) {
         int r = this.getRedValue(x, y);
         int b = this.getBlueValue(x, y);
         int pixel = (r << 16) | (g << 8) | b;
-        this.coverImage.setRGB(x, y, pixel);
+        this.img.setRGB(x, y, pixel);
     }
 
     public void setBlueValue(int b, int x, int y) {
         int r = this.getRedValue(x, y);
         int g = this.getGreenValue(x, y);
         int pixel = (r << 16) | (g << 8) | b;
-        this.coverImage.setRGB(x, y, pixel);
+        this.img.setRGB(x, y, pixel);
     }
 
     public void setPixelValue(int x, int y, int red, int green, int blue) throws IOException {
         int pixel = (red << 16) | (green << 8) | blue;
-        this.coverImage.setRGB(x, y, pixel);
+        this.img.setRGB(x, y, pixel);
     }
 
     public void createImage() throws IOException {
-        File f = new File(this.coverImagePath.substring(0, this.coverImagePath.length() - 4) + "Output.bmp");
-        ImageIO.write(coverImage, "bmp", f);
+        File f = new File(this.imgPath.substring(0, this.imgPath.length() - 4) + "Output.bmp");
+        ImageIO.write(img, "bmp", f);
     }
 
     public int[][][] getPixels(BufferedImage img) {
-//        int iArray[] = null; //An optionally pre-allocated int array
-//        int[] pixel = img.getRaster().getPixels(0, 0, img.getWidth(), img.getHeight(), iArray);
-//        return pixel;
-
-//        int[] pixel;
-//        for (int y = 0; y < img.getHeight(); y++) {
-//            for (int x = 0; x < img.getWidth(); x++) {
-//                pixel = img.getRaster().getPixel(x, y, new int[3]);
-//                System.out.println(pixel[0] + " - " + pixel[1] + " - " + pixel[2] + " - " + (img.getWidth() * y + x));
-//            }
-//        }
         int[][][] pixel = new int[img.getHeight()][img.getWidth()][3];
         for (int y = 0; y < img.getHeight(); y++) {
             for (int x = 0; x < img.getWidth(); x++) {
