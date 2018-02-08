@@ -52,6 +52,14 @@ public abstract class Steganography {
         }
         return result;
     }
+    
+    public String intToBinary(int val){
+        return Integer.toBinaryString(val);
+    }
+    
+    public int binaryToInt(String bin){
+        return Integer.parseInt(bin, 2);
+    }
 
     public abstract void hideSecretData();
 

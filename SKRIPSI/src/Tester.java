@@ -15,14 +15,14 @@ public class Tester {
 
     public static void main(String[] args) throws IOException {
         //lsb tester
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Secret Data: ");
-        String secret = sc.nextLine();
-        System.out.print("Path: ");
-        String filePath = sc.nextLine();
-        System.out.println();
-
-        LSBSteganography lsb = new LSBSteganography(secret, filePath);
+//        Scanner sc = new Scanner(System.in);
+//        System.out.print("Secret Data: ");
+//        String secret = sc.nextLine();
+//        System.out.print("Path: ");
+//        String filePath = sc.nextLine();
+//        System.out.println();
+//
+//        LSBSteganography lsb = new LSBSteganography(secret, filePath);
 //        String biner = lsb.secretDataToBinary();
 //        System.out.println(biner);
 //        System.out.println(lsb.binaryToSecretData(biner));
@@ -45,14 +45,14 @@ public class Tester {
 //        }
 //        System.out.println();
 //
-        lsb.hideSecretData();
-        lsb.image.createImage();
-////
-        System.out.print("Path: ");
-        String filePathAfter = sc.nextLine();
-        System.out.println();
-
-        ImageProcessor img = new ImageProcessor(filePathAfter);
+//        lsb.hideSecretData();
+//        lsb.image.createImage();
+//////
+//        System.out.print("Path: ");
+//        String filePathAfter = sc.nextLine();
+//        System.out.println();
+//
+//        ImageProcessor img = new ImageProcessor(filePathAfter);
 ////        int[][][] pixel = img.getPixels(img.img);
 ////        int nopixel1 = 0;       
 ////        for (int y1 = 0; y1 < img.getImgHeight(); y1++) {
@@ -65,7 +65,27 @@ public class Tester {
 ////                nopixel1++;
 ////            }
 ////        }
-        String secretData = lsb.extractSecretData(img);        
-        System.out.println(secretData);
+//        String secretData = lsb.extractSecretData(img);        
+//        System.out.println(secretData);
+        
+        //pit tester
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Secret Data: ");
+        String secret = sc.nextLine();
+        System.out.print("Path: ");
+        String filePath = sc.nextLine();
+        System.out.println();
+
+        PITSteganography pit = new PITSteganography(secret, filePath);
+//        System.out.println(pit.generateRandomNumber());
+//        
+//        int rand = sc.nextInt();
+//        int[] xy = pit.getFirstXY(rand);
+//        System.out.println("x: "+xy[0]);
+//        System.out.println("y: "+xy[1]);
+        int test = sc.nextInt();
+        System.out.println(pit.intToBinary(test));
+        String bin = sc.next();
+        System.out.println(pit.binaryToInt(bin));
     }
 }
