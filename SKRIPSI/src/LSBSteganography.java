@@ -105,14 +105,13 @@ public class LSBSteganography extends Steganography {
         }
     }
 
-    @Override
-    public String extractSecretData(ImageProcessor image) {
+    public String extractSecretData(ImageProcessor image, int secretLength) {
         String scrt = "";
-        int[][][] pixel = this.image.getPixels(image.img);
+        int[][][] pixel = image.getPixels(image.img);
         int count = 0;
         int x = 0;
         int y = 0;
-        while (count < (this.secretDataLength * 8)) {
+        while (count < (secretLength * 8)) {
             if (count % 3 == 0) {
                 if (pixel[y][x][0] % 2 == 0) {
                     scrt = scrt + 0;
@@ -135,10 +134,10 @@ public class LSBSteganography extends Steganography {
                     scrt = scrt + 1;
                 }
                 count = count + 1;
-                if (x < this.image.getImgWidth() - 1) {
+                if (x < image.getImgWidth() - 1) {
                     x++;
                 } else {
-                    if (y < this.image.getImgHeight() - 1) {
+                    if (y < image.getImgHeight() - 1) {
                         x = 0;
                         y++;
 

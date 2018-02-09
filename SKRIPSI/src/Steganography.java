@@ -63,5 +63,4 @@ public abstract class Steganography {
 
     public abstract void hideSecretData();
 
-    public abstract String extractSecretData(ImageProcessor image);
 }
