@@ -124,6 +124,6 @@ public class Tester {
         int sl = sc.nextInt();
         System.out.println();
         System.out.println(pit.extractSecretData(img, rand, sl));
-        
+        System.out.println("The End");
     }
 }
