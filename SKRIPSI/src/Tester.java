@@ -117,5 +117,13 @@ public class Tester {
                 nopixel1++;
             }
         }
+        System.out.print("random input: ");
+        int rand = sc.nextInt();
+        System.out.println();
+        System.out.print("secret length: ");
+        int sl = sc.nextInt();
+        System.out.println();
+        System.out.println(pit.extractSecretData(img, rand, sl));
+        
     }
 }
