@@ -79,7 +79,6 @@ public class Tester {
         PITSteganography pit = new PITSteganography(secret, filePath);
         System.out.println("width: " + pit.image.getImgWidth());
         System.out.println("height: " + pit.image.getImgHeight());
-        System.out.println("random: " + pit.generateRandomNumber());
         System.out.println();
 
         pit.image.getPixels(pit.image.img);
@@ -95,10 +94,11 @@ public class Tester {
                 nopixel++;
             }
         }
-        System.out.println();
+        System.out.println("random number: ");
 
-        pit.hideSecretData();
+        pit.hideSecretData();        
         pit.image.createImage();
+        System.out.println();
 
         System.out.print("Path: ");
         String filePathAfter = sc.nextLine();

@@ -162,6 +162,7 @@ public class PITSteganography extends Steganography {
     public void hideSecretData() {
         String scrt = this.secretDataToBinary();
         int randNumber = this.generateRandomNumber();
+        System.out.println(randNumber);
         int[] xy = this.getFirstXY(randNumber);
         int x = xy[0];
         int y = xy[1];
@@ -279,23 +280,25 @@ public class PITSteganography extends Steganography {
                         Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     rms = rms + 2;
-                    if (sc == 'G') {
-                        String sbin = this.intToBinary(g);
-                        String newSBin = sbin.substring(0, sbin.length() - 2) + scrt.charAt(rms + 2) + scrt.charAt(rms + 3);
-                        int newG = this.binaryToInt(newSBin);
-                        try {
-                            this.image.setPixelValue(x, y, newR, newG, b);
-                        } catch (IOException ex) {
-                            Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    } else {
-                        String sbin = this.intToBinary(b);
-                        String newSBin = sbin.substring(0, sbin.length() - 2) + scrt.charAt(rms + 2) + scrt.charAt(rms + 3);
-                        int newB = this.binaryToInt(newSBin);
-                        try {
-                            this.image.setPixelValue(x, y, newR, g, newB);
-                        } catch (IOException ex) {
-                            Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                    if (rms < scrt.length() - 1) {
+                        if (sc == 'G') {
+                            String sbin = this.intToBinary(g);
+                            String newSBin = sbin.substring(0, sbin.length() - 2) + scrt.charAt(rms) + scrt.charAt(rms + 1);
+                            int newG = this.binaryToInt(newSBin);
+                            try {
+                                this.image.setPixelValue(x, y, newR, newG, b);
+                            } catch (IOException ex) {
+                                Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            String sbin = this.intToBinary(b);
+                            String newSBin = sbin.substring(0, sbin.length() - 2) + scrt.charAt(rms) + scrt.charAt(rms + 1);
+                            int newB = this.binaryToInt(newSBin);
+                            try {
+                                this.image.setPixelValue(x, y, newR, g, newB);
+                            } catch (IOException ex) {
+                                Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     }
                 } else if (fc == 'G') {
@@ -308,23 +311,25 @@ public class PITSteganography extends Steganography {
                         Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     rms = rms + 2;
-                    if (sc == 'B') {
-                        String sbin = this.intToBinary(b);
-                        String newSBin = sbin.substring(0, sbin.length() - 2) + scrt.charAt(rms + 2) + scrt.charAt(rms + 3);
-                        int newB = this.binaryToInt(newSBin);
-                        try {
-                            this.image.setPixelValue(x, y, r, newG, newB);
-                        } catch (IOException ex) {
-                            Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    } else {
-                        String sbin = this.intToBinary(r);
-                        String newSBin = sbin.substring(0, sbin.length() - 2) + scrt.charAt(rms + 2) + scrt.charAt(rms + 3);
-                        int newR = this.binaryToInt(newSBin);
-                        try {
-                            this.image.setPixelValue(x, y, newR, newG, b);
-                        } catch (IOException ex) {
-                            Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                    if (rms < scrt.length() - 1) {
+                        if (sc == 'B') {
+                            String sbin = this.intToBinary(b);
+                            String newSBin = sbin.substring(0, sbin.length() - 2) + scrt.charAt(rms) + scrt.charAt(rms + 1);
+                            int newB = this.binaryToInt(newSBin);
+                            try {
+                                this.image.setPixelValue(x, y, r, newG, newB);
+                            } catch (IOException ex) {
+                                Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            String sbin = this.intToBinary(r);
+                            String newSBin = sbin.substring(0, sbin.length() - 2) + scrt.charAt(rms) + scrt.charAt(rms + 1);
+                            int newR = this.binaryToInt(newSBin);
+                            try {
+                                this.image.setPixelValue(x, y, newR, newG, b);
+                            } catch (IOException ex) {
+                                Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     }
                 } else {
@@ -337,23 +342,25 @@ public class PITSteganography extends Steganography {
                         Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     rms = rms + 2;
-                    if (sc == 'R') {
-                        String sbin = this.intToBinary(r);
-                        String newSBin = sbin.substring(0, sbin.length() - 2) + scrt.charAt(rms + 2) + scrt.charAt(rms + 3);
-                        int newR = this.binaryToInt(newSBin);
-                        try {
-                            this.image.setPixelValue(x, y, newR, g, newB);
-                        } catch (IOException ex) {
-                            Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    } else {
-                        String sbin = this.intToBinary(g);
-                        String newSBin = sbin.substring(0, sbin.length() - 2) + scrt.charAt(rms + 2) + scrt.charAt(rms + 3);
-                        int newG = this.binaryToInt(newSBin);
-                        try {
-                            this.image.setPixelValue(x, y, r, newG, newB);
-                        } catch (IOException ex) {
-                            Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                    if (rms < scrt.length() - 1) {
+                        if (sc == 'R') {
+                            String sbin = this.intToBinary(r);
+                            String newSBin = sbin.substring(0, sbin.length() - 2) + scrt.charAt(rms) + scrt.charAt(rms + 1);
+                            int newR = this.binaryToInt(newSBin);
+                            try {
+                                this.image.setPixelValue(x, y, newR, g, newB);
+                            } catch (IOException ex) {
+                                Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            String sbin = this.intToBinary(g);
+                            String newSBin = sbin.substring(0, sbin.length() - 2) + scrt.charAt(rms) + scrt.charAt(rms + 1);
+                            int newG = this.binaryToInt(newSBin);
+                            try {
+                                this.image.setPixelValue(x, y, r, newG, newB);
+                            } catch (IOException ex) {
+                                Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     }
                 }
