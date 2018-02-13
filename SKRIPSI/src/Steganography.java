@@ -52,12 +52,16 @@ public abstract class Steganography {
         }
         return result;
     }
-    
-    public String intToBinary(int val){
-        return Integer.toBinaryString(val);
+
+    public String intToBinary(int val) {
+        String res = Integer.toBinaryString(val);
+        if (res.length() < 2) {
+            res = "00" + res;
+        }
+        return res;
     }
-    
-    public int binaryToInt(String bin){
+
+    public int binaryToInt(String bin) {
         return Integer.parseInt(bin, 2);
     }
 
