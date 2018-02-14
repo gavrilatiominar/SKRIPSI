@@ -162,8 +162,8 @@ public class PITSteganography extends Steganography {
     public void hideSecretData() {
         String scrt = this.secretDataToBinary();
         int randNumber = this.generateRandomNumber();
-        System.out.println(randNumber);
-        int[] xy = this.getFirstXY(randNumber);
+        System.out.println(randNumber); 
+        int[] xy = this.getFirstXY(randNumber);//JANGAN LUPA DIGANTI
         int x = xy[0];
         int y = xy[1];
         char ic = this.getIndicatorChannel(this.secretDataLength);
@@ -383,7 +383,7 @@ public class PITSteganography extends Steganography {
 
     public String extractSecretData(ImageProcessor image, int randomNumber, int secretLength) {
         String res = "";
-        int[] xy = this.getFirstXY(randomNumber);
+        int[] xy = this.getFirstXY(randomNumber); //JANGAN LUPA DIGANTI
         int x = xy[0];
         int y = xy[1];
         char ic = this.getIndicatorChannel(secretLength);

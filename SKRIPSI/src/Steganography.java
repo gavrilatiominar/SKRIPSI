@@ -33,11 +33,16 @@ public abstract class Steganography {
             ascii[i] = (int) this.secretData.charAt(i);
         }
         for (int i = 0; i < ascii.length; i++) {
-            if (ascii[i] < 64) {
-                res = res + "00" + Integer.toBinaryString(ascii[i]);
-            } else {
-                res = res + 0 + Integer.toBinaryString(ascii[i]);
+            String binary = Integer.toBinaryString(ascii[i]);
+            for (int j = binary.length(); j < 8; j++) {
+                binary = "0" + binary;
             }
+            res = res + binary;
+//            if (ascii[i] < 64) {
+//                res = res + "00" + Integer.toBinaryString(ascii[i]);
+//            } else {
+//                res = res + "0" + Integer.toBinaryString(ascii[i]);
+//            }
         }
         return res;
     }
