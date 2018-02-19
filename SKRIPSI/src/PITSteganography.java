@@ -14,9 +14,12 @@ import java.util.logging.Logger;
  * @author Gavrila Sianturi
  */
 public class PITSteganography extends Steganography {
+    
+    public int randNumber;
 
     public PITSteganography(String secretData, String coverImagePath) throws IOException {
         super(secretData, coverImagePath);
+        this.randNumber = this.generateRandomNumber();
     }
 
     public int generateRandomNumber() {
@@ -161,9 +164,8 @@ public class PITSteganography extends Steganography {
     @Override
     public void hideSecretData() {
         String scrt = this.secretDataToBinary();
-        int randNumber = this.generateRandomNumber();
-        System.out.println(randNumber); 
-        int[] xy = this.getFirstXY(randNumber);//JANGAN LUPA DIGANTI
+        System.out.println(this.randNumber); 
+        int[] xy = this.getFirstXY(this.randNumber);//JANGAN LUPA DIGANTI
         int x = xy[0];
         int y = xy[1];
         char ic = this.getIndicatorChannel(this.secretDataLength);
