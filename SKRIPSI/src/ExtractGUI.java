@@ -232,6 +232,7 @@ public class ExtractGUI extends javax.swing.JFrame {
                 try {
                     PITSteganography pit = new PITSteganography();
                     ImageProcessor img = new ImageProcessor(stegoImagePath);
+                    pit.setCoverImage(img);
                     int random = Integer.parseInt(randomNumberTextField.getText());
                     int secretLength = Integer.parseInt(lengthTextField.getText());
                     String result = pit.extractSecretData(img, random, secretLength);
