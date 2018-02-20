@@ -20,10 +20,16 @@ public abstract class Steganography {
     public ImageProcessor image;
     public int secretDataLength;
 
-    public Steganography(String secretData, String imagePath) throws IOException { //param coverimage
+    public Steganography() {
+    }
+
+    public void setSecretData(String secretData) {
         this.secretData = secretData;
-        this.image = new ImageProcessor(imagePath);
-        this.secretDataLength = secretData.length();
+        this.secretDataLength = this.secretData.length();
+    }
+    
+    public void setCoverImage(ImageProcessor image){
+        this.image = image;
     }
 
     public String secretDataToBinary() {
@@ -69,7 +75,5 @@ public abstract class Steganography {
     public int binaryToInt(String bin) {
         return Integer.parseInt(bin, 2);
     }
-
-    public abstract void hideSecretData();
 
 }

@@ -15,11 +15,10 @@ import java.util.logging.Logger;
  */
 public class LSBSteganography extends Steganography {
 
-    public LSBSteganography(String secretData, String imagePath) throws IOException {
-        super(secretData, imagePath);
+    public LSBSteganography() {
+        super();
     }
 
-    @Override
     public void hideSecretData() {
         String scrt = this.secretDataToBinary();
         int x = 0;

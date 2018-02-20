@@ -22,7 +22,8 @@ public class Tester {
 //        String filePath = sc.nextLine();
 //        System.out.println();
 //
-//        LSBSteganography lsb = new LSBSteganography(secret, filePath);
+//        LSBSteganography lsb = new LSBSteganography();
+//        lsb.setSecretData(secret);
 //        String biner = lsb.secretDataToBinary();
 //        System.out.println(biner);
 //        System.out.println(lsb.binaryToSecretData(biner));
@@ -76,7 +77,10 @@ public class Tester {
         String filePath = sc.nextLine();
         System.out.println();
 
-        PITSteganography pit = new PITSteganography(secret, filePath);
+        PITSteganography pit = new PITSteganography();
+        pit.setSecretData(secret);
+        ImageProcessor img = new ImageProcessor(filePath);
+        pit.setCoverImage(img);
         System.out.println("width: " + pit.image.getImgWidth());
         System.out.println("height: " + pit.image.getImgHeight());
         System.out.println();
@@ -94,9 +98,10 @@ public class Tester {
                 nopixel++;
             }
         }
-        System.out.println("random number: ");
-
-        pit.hideSecretData();        
+        System.out.println("random number: "+pit.generateRandomNumber());
+        
+        
+        pit.hideSecretData(pit.randNumber);        
         pit.image.createImage();
         System.out.println();
 
@@ -104,8 +109,8 @@ public class Tester {
         String filePathAfter = sc.nextLine();
         System.out.println();
 
-        ImageProcessor img = new ImageProcessor(filePathAfter);
-        int[][][] pixel = img.getPixels(img.img);
+        ImageProcessor img1 = new ImageProcessor(filePathAfter);
+        int[][][] pixel = img1.getPixels(img1.img);
         int nopixel1 = 0;
         for (int y1 = 0; y1 < img.getImgHeight(); y1++) {
             for (int x1 = 0; x1 < img.getImgWidth(); x1++) {

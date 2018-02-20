@@ -17,13 +17,13 @@ public class PITSteganography extends Steganography {
     
     public int randNumber;
 
-    public PITSteganography(String secretData, String coverImagePath) throws IOException {
-        super(secretData, coverImagePath);
-        this.randNumber = this.generateRandomNumber();
+    public PITSteganography(){
+        super();
     }
 
     public int generateRandomNumber() {
-        return ThreadLocalRandom.current().nextInt(0, (this.image.getImgHeight() * this.image.getImgWidth()));
+        this.randNumber = ThreadLocalRandom.current().nextInt(0, (this.image.getImgHeight() * this.image.getImgWidth()));
+        return this.randNumber;
     }
 
     public int[] getFirstXY(int randNumber) {
@@ -161,11 +161,9 @@ public class PITSteganography extends Steganography {
         return res;
     }
 
-    @Override
-    public void hideSecretData() {
-        String scrt = this.secretDataToBinary();
-        System.out.println(this.randNumber); 
-        int[] xy = this.getFirstXY(this.randNumber);//JANGAN LUPA DIGANTI
+    public void hideSecretData(int randomNumber) {
+        String scrt = this.secretDataToBinary();        
+        int[] xy = this.getFirstXY(randomNumber);//JANGAN LUPA DIGANTI
         int x = xy[0];
         int y = xy[1];
         char ic = this.getIndicatorChannel(this.secretDataLength);
@@ -385,7 +383,7 @@ public class PITSteganography extends Steganography {
 
     public String extractSecretData(ImageProcessor image, int randomNumber, int secretLength) {
         String res = "";
-        int[] xy = this.getFirstXY(randomNumber); //JANGAN LUPA DIGANTI
+        int[] xy = this.getFirstXY(randomNumber); 
         int x = xy[0];
         int y = xy[1];
         char ic = this.getIndicatorChannel(secretLength);
