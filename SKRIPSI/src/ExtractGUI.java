@@ -49,6 +49,7 @@ public class ExtractGUI extends javax.swing.JFrame {
         prosesButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         hasilEkstraksiTextField = new javax.swing.JTextField();
+        resetButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ekstraksi Pesan Rahasia");
@@ -80,7 +81,19 @@ public class ExtractGUI extends javax.swing.JFrame {
 
         jLabel3.setText("Panjang Secret Data");
 
+        lengthTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lengthTextFieldActionPerformed(evt);
+            }
+        });
+
         nomorPikselLabel.setText("Nomor Piksel Awal");
+
+        randomNumberTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                randomNumberTextFieldActionPerformed(evt);
+            }
+        });
 
         prosesButton.setText("Proses");
         prosesButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -98,6 +111,8 @@ public class ExtractGUI extends javax.swing.JFrame {
             }
         });
 
+        resetButton.setText("Reset");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,12 +127,14 @@ public class ExtractGUI extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(prosesButton))
+                        .addComponent(jLabel5)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(prosesButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(resetButton))
                             .addComponent(hasilEkstraksiTextField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -156,7 +173,9 @@ public class ExtractGUI extends javax.swing.JFrame {
                     .addComponent(lengthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(randomNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(prosesButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(prosesButton)
+                    .addComponent(resetButton))
                 .addGap(33, 33, 33)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -245,6 +264,16 @@ public class ExtractGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_prosesButtonMouseClicked
 
+    private void randomNumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomNumberTextFieldActionPerformed
+        // TODO add your handling code here:
+        hasilEkstraksiTextField.setText(null);
+    }//GEN-LAST:event_randomNumberTextFieldActionPerformed
+
+    private void lengthTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lengthTextFieldActionPerformed
+        // TODO add your handling code here:
+        hasilEkstraksiTextField.setText(null);
+    }//GEN-LAST:event_lengthTextFieldActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -292,6 +321,7 @@ public class ExtractGUI extends javax.swing.JFrame {
     private javax.swing.JLabel nomorPikselLabel;
     private javax.swing.JButton prosesButton;
     private javax.swing.JTextField randomNumberTextField;
+    private javax.swing.JButton resetButton;
     private javax.swing.JTextField stegoImageTextField;
     // End of variables declaration//GEN-END:variables
 }
