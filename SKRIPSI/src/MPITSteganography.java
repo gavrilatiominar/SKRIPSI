@@ -393,14 +393,14 @@ public class MPITSteganography extends Steganography {
         int rms = 0;
         while (rms < bitLength) {
             String ind = this.getIndicatorValue(x, y, secretLength);
-            int r = this.image.getRedValue(x, y);
-            int g = this.image.getGreenValue(x, y);
-            int b = this.image.getBlueValue(x, y);
+            int r = image.getRedValue(x, y);
+            int g = image.getGreenValue(x, y);
+            int b = image.getBlueValue(x, y);
             if (ind.equals("00")) {
-                if (x < this.image.getImgWidth() - 1) {
+                if (x < image.getImgWidth() - 1) {
                     x++;
                 } else {
-                    if (y < this.image.getImgHeight() - 1) {
+                    if (y < image.getImgHeight() - 1) {
                         x = 0;
                         y++;
                     } else {
@@ -419,10 +419,10 @@ public class MPITSteganography extends Steganography {
                     String bin = this.intToBinary(b);
                     res = res + bin.substring(bin.length() - 2);
                 }
-                if (x < this.image.getImgWidth() - 1) {
+                if (x < image.getImgWidth() - 1) {
                     x++;
                 } else {
-                    if (y < this.image.getImgHeight() - 1) {
+                    if (y < image.getImgHeight() - 1) {
                         x = 0;
                         y++;
                     } else {
@@ -442,10 +442,10 @@ public class MPITSteganography extends Steganography {
                     String bin = this.intToBinary(b);
                     res = res + bin.substring(bin.length() - 2);
                 }
-                if (x < this.image.getImgWidth() - 1) {
+                if (x < image.getImgWidth() - 1) {
                     x++;
                 } else {
-                    if (y < this.image.getImgHeight() - 1) {
+                    if (y < image.getImgHeight() - 1) {
                         x = 0;
                         y++;
                     } else {
@@ -495,10 +495,10 @@ public class MPITSteganography extends Steganography {
                         }
                     }
                 }
-                if (x < this.image.getImgWidth() - 1) {
+                if (x < image.getImgWidth() - 1) {
                     x++;
                 } else {
-                    if (y < this.image.getImgHeight() - 1) {
+                    if (y < image.getImgHeight() - 1) {
                         x = 0;
                         y++;
                     } else {

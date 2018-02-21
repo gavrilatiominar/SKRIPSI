@@ -24,8 +24,8 @@ public class ExtractGUI extends javax.swing.JFrame {
      */
     public ExtractGUI() {
         initComponents();
-        nomorPikselLabel.setVisible(false);
-        randomNumberTextField.setVisible(false);
+        stegoKeyLabel.setVisible(true);
+        stegoKeyTextField.setVisible(true);
     }
 
     /**
@@ -42,10 +42,8 @@ public class ExtractGUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         stegoImageTextField = new javax.swing.JTextField();
         browseButton = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        lengthTextField = new javax.swing.JTextField();
-        nomorPikselLabel = new javax.swing.JLabel();
-        randomNumberTextField = new javax.swing.JTextField();
+        stegoKeyLabel = new javax.swing.JLabel();
+        stegoKeyTextField = new javax.swing.JTextField();
         prosesButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         hasilEkstraksiTextField = new javax.swing.JTextField();
@@ -56,7 +54,7 @@ public class ExtractGUI extends javax.swing.JFrame {
 
         jLabel1.setText("Metode Ekstraksi");
 
-        metodeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Least Significant Bit", "Pixel Indicator Technique" }));
+        metodeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Least Significant Bit", "Pixel Indicator Technique", "Modified Pixel Indicator Technique" }));
         metodeComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 metodeComboBoxActionPerformed(evt);
@@ -79,19 +77,11 @@ public class ExtractGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Panjang Secret Data");
+        stegoKeyLabel.setText("Stego Key");
 
-        lengthTextField.addActionListener(new java.awt.event.ActionListener() {
+        stegoKeyTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lengthTextFieldActionPerformed(evt);
-            }
-        });
-
-        nomorPikselLabel.setText("Nomor Piksel Awal");
-
-        randomNumberTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                randomNumberTextFieldActionPerformed(evt);
+                stegoKeyTextFieldActionPerformed(evt);
             }
         });
 
@@ -112,6 +102,14 @@ public class ExtractGUI extends javax.swing.JFrame {
         });
 
         resetButton.setText("Reset");
+        resetButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                resetButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                resetButtonMouseEntered(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,12 +138,9 @@ public class ExtractGUI extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(lengthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 37, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(nomorPikselLabel)
-                                            .addComponent(randomNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(stegoKeyLabel)
+                                            .addComponent(stegoKeyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 158, Short.MAX_VALUE))
                                     .addComponent(stegoImageTextField))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(browseButton)))
@@ -165,13 +160,9 @@ public class ExtractGUI extends javax.swing.JFrame {
                     .addComponent(stegoImageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(browseButton))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(nomorPikselLabel))
+                .addComponent(stegoKeyLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lengthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(randomNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(stegoKeyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(prosesButton)
@@ -192,25 +183,31 @@ public class ExtractGUI extends javax.swing.JFrame {
 
     private void metodeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_metodeComboBoxActionPerformed
         // TODO add your handling code here:
-        if (metodeComboBox.getSelectedIndex() == 0) {
-            nomorPikselLabel.setVisible(false);
-            randomNumberTextField.setVisible(false);
+        if (metodeComboBox.getSelectedIndex() == 1) {
+            hasilEkstraksiTextField.setText(null);
+            stegoKeyLabel.setVisible(false);
+            stegoKeyTextField.setVisible(false);
         } else {
-            nomorPikselLabel.setVisible(true);
-            randomNumberTextField.setVisible(true);
+            hasilEkstraksiTextField.setText(null);
+            stegoKeyLabel.setVisible(true);
+            stegoKeyTextField.setVisible(true);
         }
     }//GEN-LAST:event_metodeComboBoxActionPerformed
 
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
         // TODO add your handling code here:
-        randomNumberTextField.setText(null);
+        stegoKeyTextField.setText(null);
         JFileChooser browse = new JFileChooser();
         int returnName = browse.showOpenDialog(null);
         if (returnName == JFileChooser.APPROVE_OPTION) {
             File f = browse.getSelectedFile();
             if (f != null) {
                 this.stegoImagePath = f.getAbsolutePath();
-                this.stegoImageTextField.setText(stegoImagePath);
+                if (this.stegoImagePath.substring(this.stegoImagePath.length() - 4).equals("jpeg") || this.stegoImagePath.substring(this.stegoImagePath.length() - 3).equals("jpg") || this.stegoImagePath.substring(this.stegoImagePath.length() - 3).equals("bmp") || this.stegoImagePath.substring(this.stegoImagePath.length() - 3).equals("png")) {
+                    this.stegoImageTextField.setText(stegoImagePath);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Format file tidak sesuai!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }//GEN-LAST:event_browseButtonActionPerformed
@@ -222,57 +219,75 @@ public class ExtractGUI extends javax.swing.JFrame {
     private void prosesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prosesButtonMouseClicked
         // TODO add your handling code here:
         if (metodeComboBox.getSelectedIndex() == 0) {
-            if (stegoImageTextField.getText().isEmpty() && lengthTextField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori dan masukkan panjang secret data!", "Error", JOptionPane.ERROR_MESSAGE);
+            if (stegoImageTextField.getText().isEmpty() && stegoKeyTextField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori dan masukkan stego key!", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (stegoImageTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if (lengthTextField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Masukkan panjang secret data!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (stegoKeyTextField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Masukkan panjang stego key!", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
                     LSBSteganography lsb = new LSBSteganography();
                     ImageProcessor img = new ImageProcessor(stegoImagePath);
-                    String result = lsb.extractSecretData(img, Integer.parseInt(lengthTextField.getText()));
+                    lsb.setCoverImage(img);
+                    String[] stegokey = stegoKeyTextField.getText().split("-");
+                    String result = lsb.extractSecretData(img, Integer.parseInt(stegokey[0]));
+                    hasilEkstraksiTextField.setText(result);
+                } catch (IOException ex) {
+                    Logger.getLogger(ExtractGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else if (metodeComboBox.getSelectedIndex() == 1) {
+            if (stegoImageTextField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                try {
+                    PITSteganography pit = new PITSteganography();
+                    ImageProcessor img = new ImageProcessor(stegoImagePath);
+                    pit.setCoverImage(img);
+                    String result = pit.extractSecretData(img);
                     hasilEkstraksiTextField.setText(result);
                 } catch (IOException ex) {
                     Logger.getLogger(ExtractGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else {
-            if (stegoImageTextField.getText().isEmpty() && lengthTextField.getText().isEmpty() && randomNumberTextField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori dan masukkan panjang secret data serta nomor piksel awal!", "Error", JOptionPane.ERROR_MESSAGE);
+            if (stegoImageTextField.getText().isEmpty() && stegoKeyTextField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori dan masukkan stego key!", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (stegoImageTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if (lengthTextField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Masukkan panjang secret data!", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if (randomNumberTextField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "masukkan nomor piksel awal!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (stegoKeyTextField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Masukkan panjang stego key!", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
-                    MPITSteganography pit = new MPITSteganography();
+                    MPITSteganography mpit = new MPITSteganography();
                     ImageProcessor img = new ImageProcessor(stegoImagePath);
-                    pit.setCoverImage(img);
-                    int random = Integer.parseInt(randomNumberTextField.getText());
-                    int secretLength = Integer.parseInt(lengthTextField.getText());
-                    String result = pit.extractSecretData(img, random, secretLength);
+                    mpit.setCoverImage(img);
+                    String[] stegokey = stegoKeyTextField.getText().split("-");
+                    String result = mpit.extractSecretData(img, Integer.parseInt(stegokey[1]), Integer.parseInt(stegokey[0]));
                     hasilEkstraksiTextField.setText(result);
                 } catch (IOException ex) {
                     Logger.getLogger(ExtractGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
         }
     }//GEN-LAST:event_prosesButtonMouseClicked
 
-    private void randomNumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomNumberTextFieldActionPerformed
+    private void stegoKeyTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stegoKeyTextFieldActionPerformed
         // TODO add your handling code here:
         hasilEkstraksiTextField.setText(null);
-    }//GEN-LAST:event_randomNumberTextFieldActionPerformed
+    }//GEN-LAST:event_stegoKeyTextFieldActionPerformed
 
-    private void lengthTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lengthTextFieldActionPerformed
+    private void resetButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetButtonMouseEntered
         // TODO add your handling code here:
+    }//GEN-LAST:event_resetButtonMouseEntered
+
+    private void resetButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetButtonMouseClicked
+        // TODO add your handling code here:
+        stegoImageTextField.setText(null);
+        stegoKeyTextField.setText(null);
         hasilEkstraksiTextField.setText(null);
-    }//GEN-LAST:event_lengthTextFieldActionPerformed
+    }//GEN-LAST:event_resetButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -314,14 +329,12 @@ public class ExtractGUI extends javax.swing.JFrame {
     private javax.swing.JTextField hasilEkstraksiTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField lengthTextField;
     private javax.swing.JComboBox<String> metodeComboBox;
-    private javax.swing.JLabel nomorPikselLabel;
     private javax.swing.JButton prosesButton;
-    private javax.swing.JTextField randomNumberTextField;
     private javax.swing.JButton resetButton;
     private javax.swing.JTextField stegoImageTextField;
+    private javax.swing.JLabel stegoKeyLabel;
+    private javax.swing.JTextField stegoKeyTextField;
     // End of variables declaration//GEN-END:variables
 }

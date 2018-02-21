@@ -113,24 +113,24 @@ public class LSBSteganography extends Steganography {
         while (count < (secretLength * 8)) {
             if (count % 3 == 0) {
                 if (pixel[y][x][0] % 2 == 0) {
-                    scrt = scrt + 0;
+                    scrt = scrt + "0";
                 } else {
-                    scrt = scrt + 1;
+                    scrt = scrt + "1";
                 }
                 count = count + 1;
             } else if (count % 3 == 1) {
                 if (pixel[y][x][1] % 2 == 0) {
-                    scrt = scrt + 0;
+                    scrt = scrt + "0";
                 } else {
-                    scrt = scrt + 1;
+                    scrt = scrt + "1";
                 }
                 count = count + 1;
             } else {
                 if (pixel[y][x][2] % 2 == 0) {
-                    scrt = scrt + 0;
+                    scrt = scrt + "0";
 
                 } else {
-                    scrt = scrt + 1;
+                    scrt = scrt + "1";
                 }
                 count = count + 1;
                 if (x < image.getImgWidth() - 1) {
@@ -139,7 +139,6 @@ public class LSBSteganography extends Steganography {
                     if (y < image.getImgHeight() - 1) {
                         x = 0;
                         y++;
-
                     }
                 }
             }

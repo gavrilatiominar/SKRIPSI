@@ -19,18 +19,21 @@ public class HideGUI extends javax.swing.JFrame {
 
     public String coverImagePath;
     public String stegoImagePath;
-    public MPITSteganography pit;
     public LSBSteganography lsb;
+    public PITSteganography pit;
+    public MPITSteganography mpit;
 
     /**
      * Creates new form GUI
      */
     public HideGUI() {
         initComponents();
-        generateButton.setVisible(false);
-        randomNumberTextField.setText("0");
+        stegoKeyLabel.setVisible(true);
+        stegoKeyTextField.setVisible(true);
+        generateButton.setVisible(true);
         this.lsb = new LSBSteganography();
-        this.pit = new MPITSteganography();
+        this.pit = new PITSteganography();
+        this.mpit = new MPITSteganography();
     }
 
     /**
@@ -50,8 +53,8 @@ public class HideGUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         secretDataTextField = new javax.swing.JTextField();
         browseButton = new javax.swing.JButton();
-        nomorPikselLabel = new javax.swing.JLabel();
-        randomNumberTextField = new javax.swing.JTextField();
+        stegoKeyLabel = new javax.swing.JLabel();
+        stegoKeyTextField = new javax.swing.JTextField();
         generateButton = new javax.swing.JButton();
         prosesButton = new javax.swing.JButton();
         resetButton = new javax.swing.JButton();
@@ -72,7 +75,7 @@ public class HideGUI extends javax.swing.JFrame {
 
         jLabel1.setText("Metode Steganografi");
 
-        metodeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Least Significant Bit", "Pixel Indicator Technique" }));
+        metodeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Least Significant Bit", "Pixel Indicator Technique", "Modified Pixel Indicator Technique" }));
         metodeComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 metodeComboBoxActionPerformed(evt);
@@ -90,6 +93,11 @@ public class HideGUI extends javax.swing.JFrame {
 
         jLabel3.setText("Cover Image");
 
+        secretDataTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                secretDataTextFieldFocusGained(evt);
+            }
+        });
         secretDataTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 secretDataTextFieldActionPerformed(evt);
@@ -103,16 +111,16 @@ public class HideGUI extends javax.swing.JFrame {
             }
         });
 
-        nomorPikselLabel.setText("Nomor Piksel Awal");
+        stegoKeyLabel.setText("Stego Key");
 
-        randomNumberTextField.setEditable(false);
-        randomNumberTextField.addActionListener(new java.awt.event.ActionListener() {
+        stegoKeyTextField.setEditable(false);
+        stegoKeyTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                randomNumberTextFieldActionPerformed(evt);
+                stegoKeyTextFieldActionPerformed(evt);
             }
         });
 
-        generateButton.setText("Generate Random Number");
+        generateButton.setText("Generate Stego Key");
         generateButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 generateButtonMouseClicked(evt);
@@ -164,9 +172,11 @@ public class HideGUI extends javax.swing.JFrame {
                         .addComponent(browseButton))
                     .addComponent(secretDataTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(randomNumberTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nomorPikselLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(stegoKeyLabel)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(stegoKeyTextField))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(generateButton)))
                 .addContainerGap(27, Short.MAX_VALUE))
@@ -189,10 +199,10 @@ public class HideGUI extends javax.swing.JFrame {
                     .addComponent(coverImageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(browseButton))
                 .addGap(18, 18, 18)
-                .addComponent(nomorPikselLabel)
+                .addComponent(stegoKeyLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(randomNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stegoKeyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(generateButton))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -212,31 +222,37 @@ public class HideGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_secretDataTextFieldActionPerformed
 
-    private void randomNumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomNumberTextFieldActionPerformed
+    private void stegoKeyTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stegoKeyTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_randomNumberTextFieldActionPerformed
+    }//GEN-LAST:event_stegoKeyTextFieldActionPerformed
 
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
         // TODO add your handling code here:
-        randomNumberTextField.setText(null);
+        stegoKeyTextField.setText(null);
         JFileChooser browse = new JFileChooser();
         int returnName = browse.showOpenDialog(null);
         if (returnName == JFileChooser.APPROVE_OPTION) {
             File f = browse.getSelectedFile();
             if (f != null) {
                 this.coverImagePath = f.getAbsolutePath();
-                this.coverImageTextField.setText(coverImagePath);
+                if (this.coverImagePath.substring(this.coverImagePath.length() - 4).equals("jpeg") || this.coverImagePath.substring(this.coverImagePath.length() - 3).equals("jpg") || this.coverImagePath.substring(this.coverImagePath.length() - 3).equals("bmp") || this.coverImagePath.substring(this.coverImagePath.length() - 3).equals("png")) {
+                    this.coverImageTextField.setText(coverImagePath);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Format file tidak sesuai!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }//GEN-LAST:event_browseButtonActionPerformed
 
     private void metodeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_metodeComboBoxActionPerformed
         // TODO add your handling code here:
-        if (metodeComboBox.getSelectedIndex() == 0) {
-            randomNumberTextField.setText("0");
+        if (metodeComboBox.getSelectedIndex() == 1) {
+            stegoKeyLabel.setVisible(false);
+            stegoKeyTextField.setVisible(false);
             generateButton.setVisible(false);
         } else {
-            randomNumberTextField.setText(null);
+            stegoKeyLabel.setVisible(true);
+            stegoKeyTextField.setVisible(true);
             generateButton.setVisible(true);
         }
     }//GEN-LAST:event_metodeComboBoxActionPerformed
@@ -246,8 +262,8 @@ public class HideGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_generateButtonActionPerformed
 
     private void generateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generateButtonMouseClicked
-        // TODO add your handling code here:
-        if (metodeComboBox.getSelectedIndex() == 1) {
+        // TODO add your handling code here:        
+        if (metodeComboBox.getSelectedIndex() == 0) {
             if (secretDataTextField.getText().isEmpty() && coverImageTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Masukkan secret data dan pilih cover image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (secretDataTextField.getText().isEmpty()) {
@@ -256,11 +272,30 @@ public class HideGUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Pilih cover image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
-                    this.pit.setSecretData(secretDataTextField.getText());
+                    this.lsb.setSecretData(secretDataTextField.getText());
                     ImageProcessor img = new ImageProcessor(coverImagePath);
-                    this.pit.setCoverImage(img);
-                    this.pit.generateRandomNumber();
-                    randomNumberTextField.setText("" + this.pit.randNumber);
+                    this.lsb.setCoverImage(img);
+                    stegoKeyTextField.setText(this.lsb.secretDataLength + "-0");
+                } catch (IOException ex) {
+                    Logger.getLogger(HideGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        }
+        if (metodeComboBox.getSelectedIndex() == 2) {
+            if (secretDataTextField.getText().isEmpty() && coverImageTextField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Masukkan secret data dan pilih cover image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (secretDataTextField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Masukkan secret data!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (coverImageTextField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Pilih cover image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                try {
+                    this.mpit.setSecretData(secretDataTextField.getText());
+                    ImageProcessor img = new ImageProcessor(coverImagePath);
+                    this.mpit.setCoverImage(img);
+                    this.mpit.generateRandomNumber();
+                    stegoKeyTextField.setText(this.mpit.secretDataLength + "-" + this.mpit.randNumber);
                 } catch (IOException ex) {
                     Logger.getLogger(HideGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -291,13 +326,33 @@ public class HideGUI extends javax.swing.JFrame {
                     Logger.getLogger(HideGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        } else if (metodeComboBox.getSelectedIndex() == 1) {
+            if (secretDataTextField.getText().isEmpty() && coverImageTextField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Masukkan secret data dan pilih cover image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (secretDataTextField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Masukkan secret data!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (coverImageTextField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Pilih cover image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                try {
+                    this.pit.setSecretData(secretDataTextField.getText());
+                    ImageProcessor img = new ImageProcessor(coverImagePath);
+                    this.pit.setCoverImage(img);
+                    this.pit.hideSecretData();
+                    this.pit.image.createImage();
+                    this.stegoImagePath = this.coverImagePath.substring(0, this.coverImagePath.length() - 4) + "Output.bmp";
+                    JOptionPane.showMessageDialog(null, "Hasil penyisipan : " + this.stegoImagePath, "Success", JOptionPane.PLAIN_MESSAGE);
+                } catch (IOException ex) {
+                    Logger.getLogger(HideGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         } else {
             try {
-                this.pit.setSecretData(secretDataTextField.getText());
+                this.mpit.setSecretData(secretDataTextField.getText());
                 ImageProcessor img = new ImageProcessor(coverImagePath);
-                this.pit.setCoverImage(img);
-                pit.hideSecretData(Integer.parseInt(randomNumberTextField.getText()));
-                pit.image.createImage();
+                this.mpit.setCoverImage(img);
+                mpit.hideSecretData(this.mpit.randNumber);
+                mpit.image.createImage();
                 this.stegoImagePath = this.coverImagePath.substring(0, this.coverImagePath.length() - 4) + "Output.bmp";
                 JOptionPane.showMessageDialog(null, "Hasil penyisipan : " + this.stegoImagePath, "Success", JOptionPane.PLAIN_MESSAGE);
             } catch (IOException ex) {
@@ -310,14 +365,19 @@ public class HideGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         secretDataTextField.setText(null);
         coverImageTextField.setText(null);
-        if (metodeComboBox.getSelectedIndex() == 1) {
-            randomNumberTextField.setText(null);
+        if (metodeComboBox.getSelectedIndex() == 2) {
+            stegoKeyTextField.setText(null);
         }
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void prosesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prosesButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_prosesButtonActionPerformed
+
+    private void secretDataTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_secretDataTextFieldFocusGained
+        // TODO add your handling code here:        
+        stegoKeyTextField.setText(null);
+    }//GEN-LAST:event_secretDataTextFieldFocusGained
 
     /**
      * @param args the command line arguments
@@ -365,10 +425,10 @@ public class HideGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JComboBox<String> metodeComboBox;
-    private javax.swing.JLabel nomorPikselLabel;
     private javax.swing.JButton prosesButton;
-    private javax.swing.JTextField randomNumberTextField;
     private javax.swing.JButton resetButton;
     private javax.swing.JTextField secretDataTextField;
+    private javax.swing.JLabel stegoKeyLabel;
+    private javax.swing.JTextField stegoKeyTextField;
     // End of variables declaration//GEN-END:variables
 }

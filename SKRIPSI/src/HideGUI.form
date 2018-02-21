@@ -60,9 +60,12 @@
                   </Group>
                   <Component id="secretDataTextField" alignment="0" pref="351" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="randomNumberTextField" alignment="0" max="32767" attributes="0"/>
-                          <Component id="nomorPikselLabel" alignment="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="stegoKeyLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="stegoKeyTextField" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="generateButton" min="-2" max="-2" attributes="0"/>
@@ -91,10 +94,10 @@
                   <Component id="browseButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="nomorPikselLabel" min="-2" max="-2" attributes="0"/>
+              <Component id="stegoKeyLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="randomNumberTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="stegoKeyTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="generateButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -116,9 +119,10 @@
     <Component class="javax.swing.JComboBox" name="metodeComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="2">
+          <StringArray count="3">
             <StringItem index="0" value="Least Significant Bit"/>
             <StringItem index="1" value="Pixel Indicator Technique"/>
+            <StringItem index="2" value="Modified Pixel Indicator Technique"/>
           </StringArray>
         </Property>
       </Properties>
@@ -149,6 +153,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="secretDataTextField">
       <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="secretDataTextFieldFocusGained"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="secretDataTextFieldActionPerformed"/>
       </Events>
     </Component>
@@ -160,22 +165,22 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="browseButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="nomorPikselLabel">
+    <Component class="javax.swing.JLabel" name="stegoKeyLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nomor Piksel Awal"/>
+        <Property name="text" type="java.lang.String" value="Stego Key"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="randomNumberTextField">
+    <Component class="javax.swing.JTextField" name="stegoKeyTextField">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="randomNumberTextFieldActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stegoKeyTextFieldActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="generateButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Generate Random Number"/>
+        <Property name="text" type="java.lang.String" value="Generate Stego Key"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="generateButtonMouseClicked"/>
