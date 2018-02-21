@@ -1,6 +1,5 @@
 
 import java.io.IOException;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,33 +13,9 @@ import java.util.logging.Logger;
  * @author Gavrila Sianturi
  */
 public class PITSteganography extends Steganography {
-    
-    public int randNumber;
 
-    public PITSteganography(){
+    public PITSteganography() {
         super();
-    }
-
-    public int generateRandomNumber() {
-        this.randNumber = ThreadLocalRandom.current().nextInt(0, (this.image.getImgHeight() * this.image.getImgWidth()));
-        return this.randNumber;
-    }
-
-    public int[] getFirstXY(int randNumber) {
-        int[] xy = new int[2];
-        xy[0] = 0;
-        xy[1] = 0;
-        for (int i = 0; i < randNumber; i++) {
-            if (xy[0] < this.image.getImgWidth() - 1) {
-                xy[0]++;
-            } else {
-                if (xy[1] < this.image.getImgHeight() - 1) {
-                    xy[0] = 0;
-                    xy[1]++;
-                }
-            }
-        }
-        return xy;
     }
 
     public boolean isEven(int secretLength) {
@@ -161,11 +136,81 @@ public class PITSteganography extends Steganography {
         return res;
     }
 
-    public void hideSecretData(int randomNumber) {
-        String scrt = this.secretDataToBinary();        
-        int[] xy = this.getFirstXY(randomNumber);//JANGAN LUPA DIGANTI
-        int x = xy[0];
-        int y = xy[1];
+    public void hideSecretData() throws IOException {
+        String scrt = this.secretDataToBinary();
+        int x = 0;
+        int y = 0;
+        String scrtSize = this.intToBinary(this.secretDataLength);
+        int[] newrgb = new int[3];
+        for (int i = 0; i < 8; i++) {
+            int r = this.image.getRedValue(x, y);
+            int g = this.image.getGreenValue(x, y);
+            int b = this.image.getBlueValue(x, y);
+            if (i % 3 == 0) {
+                if (r % 2 == 0) {
+                    if (scrtSize.charAt(i) == '1') {
+                        newrgb[0] = r + 1;
+                    } else {
+                        newrgb[0] = r;
+                    }
+                } else {
+                    if (scrtSize.charAt(i) == '0') {
+                        newrgb[0] = r - 1;
+                    } else {
+                        newrgb[0] = r;
+                    }
+                }
+                this.image.setPixelValue(x, y, newrgb[0], g, b);
+            } else if (i % 3 == 1) {
+                if (g % 2 == 0) {
+                    if (scrtSize.charAt(i) == '1') {
+                        newrgb[1] = g + 1;
+                    } else {
+                        newrgb[1] = g;
+                    }
+                } else {
+                    if (scrtSize.charAt(i) == '0') {
+                        newrgb[1] = g - 1;
+                    } else {
+                        newrgb[1] = g;
+                    }
+                }
+                this.image.setPixelValue(x, y, newrgb[0], newrgb[1], b);
+            } else {
+                if (b % 2 == 0) {
+                    if (scrtSize.charAt(i) == '1') {
+                        newrgb[2] = b + 1;
+                    } else {
+                        newrgb[2] = b;
+                    }
+                } else {
+                    if (scrtSize.charAt(i) == '0') {
+                        newrgb[2] = b - 1;
+                    } else {
+                        newrgb[2] = b;
+                    }
+                }
+                this.image.setPixelValue(x, y, newrgb[0], newrgb[1], newrgb[2]);
+                if (x < this.image.getImgWidth() - 1) {
+                    x++;
+                } else {
+                    if (y < this.image.getImgHeight() - 1) {
+                        x = 0;
+                        y++;
+
+                    }
+                }
+            }
+        }
+        if (x < this.image.getImgWidth() - 1) {
+            x++;
+        } else {
+            if (y < this.image.getImgHeight() - 1) {
+                x = 0;
+                y++;
+
+            }
+        }
         char ic = this.getIndicatorChannel(this.secretDataLength);
         char fc = this.get1stChannel(this.secretDataLength);
         char sc = this.get2ndChannel(this.secretDataLength);
@@ -195,7 +240,7 @@ public class PITSteganography extends Steganography {
                     try {
                         this.image.setPixelValue(x, y, newR, g, b);
                     } catch (IOException ex) {
-                        Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else if (sc == 'G') {
                     String bin = this.intToBinary(g);
@@ -204,7 +249,7 @@ public class PITSteganography extends Steganography {
                     try {
                         this.image.setPixelValue(x, y, r, newG, b);
                     } catch (IOException ex) {
-                        Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
                     String bin = this.intToBinary(b);
@@ -213,7 +258,7 @@ public class PITSteganography extends Steganography {
                     try {
                         this.image.setPixelValue(x, y, r, g, newB);
                     } catch (IOException ex) {
-                        Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 if (x < this.image.getImgWidth() - 1) {
@@ -236,7 +281,7 @@ public class PITSteganography extends Steganography {
                     try {
                         this.image.setPixelValue(x, y, newR, g, b);
                     } catch (IOException ex) {
-                        Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else if (fc == 'G') {
                     String bin = this.intToBinary(g);
@@ -245,7 +290,7 @@ public class PITSteganography extends Steganography {
                     try {
                         this.image.setPixelValue(x, y, r, newG, b);
                     } catch (IOException ex) {
-                        Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
                     String bin = this.intToBinary(b);
@@ -254,7 +299,7 @@ public class PITSteganography extends Steganography {
                     try {
                         this.image.setPixelValue(x, y, r, g, newB);
                     } catch (IOException ex) {
-                        Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 if (x < this.image.getImgWidth() - 1) {
@@ -277,7 +322,7 @@ public class PITSteganography extends Steganography {
                     try {
                         this.image.setPixelValue(x, y, newR, g, b);
                     } catch (IOException ex) {
-                        Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     rms = rms + 2;
                     if (rms < scrt.length() - 1) {
@@ -288,7 +333,7 @@ public class PITSteganography extends Steganography {
                             try {
                                 this.image.setPixelValue(x, y, newR, newG, b);
                             } catch (IOException ex) {
-                                Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         } else {
                             String sbin = this.intToBinary(b);
@@ -297,7 +342,7 @@ public class PITSteganography extends Steganography {
                             try {
                                 this.image.setPixelValue(x, y, newR, g, newB);
                             } catch (IOException ex) {
-                                Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     }
@@ -308,7 +353,7 @@ public class PITSteganography extends Steganography {
                     try {
                         this.image.setPixelValue(x, y, r, newG, b);
                     } catch (IOException ex) {
-                        Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     rms = rms + 2;
                     if (rms < scrt.length() - 1) {
@@ -319,7 +364,7 @@ public class PITSteganography extends Steganography {
                             try {
                                 this.image.setPixelValue(x, y, r, newG, newB);
                             } catch (IOException ex) {
-                                Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         } else {
                             String sbin = this.intToBinary(r);
@@ -328,7 +373,7 @@ public class PITSteganography extends Steganography {
                             try {
                                 this.image.setPixelValue(x, y, newR, newG, b);
                             } catch (IOException ex) {
-                                Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     }
@@ -339,7 +384,7 @@ public class PITSteganography extends Steganography {
                     try {
                         this.image.setPixelValue(x, y, r, g, newB);
                     } catch (IOException ex) {
-                        Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     rms = rms + 2;
                     if (rms < scrt.length() - 1) {
@@ -350,7 +395,7 @@ public class PITSteganography extends Steganography {
                             try {
                                 this.image.setPixelValue(x, y, newR, g, newB);
                             } catch (IOException ex) {
-                                Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         } else {
                             String sbin = this.intToBinary(g);
@@ -359,7 +404,7 @@ public class PITSteganography extends Steganography {
                             try {
                                 this.image.setPixelValue(x, y, r, newG, newB);
                             } catch (IOException ex) {
-                                Logger.getLogger(PITSteganography.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(MPITSteganography.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     }
@@ -378,138 +423,144 @@ public class PITSteganography extends Steganography {
                 rms = rms + 2;
             }
         }
-
     }
-
-    public String extractSecretData(ImageProcessor image, int randomNumber, int secretLength) {
-        String res = "";
-        int[] xy = this.getFirstXY(randomNumber); 
-        int x = xy[0];
-        int y = xy[1];
-        char ic = this.getIndicatorChannel(secretLength);
-        char fc = this.get1stChannel(secretLength);
-        char sc = this.get2ndChannel(secretLength);
-        int bitLength = secretLength * 8;
-        int rms = 0;
-        while (rms < bitLength) {
-            String ind = this.getIndicatorValue(x, y, secretLength);
-            int r = this.image.getRedValue(x, y);
-            int g = this.image.getGreenValue(x, y);
-            int b = this.image.getBlueValue(x, y);
-            if (ind.equals("00")) {
-                if (x < this.image.getImgWidth() - 1) {
-                    x++;
-                } else {
-                    if (y < this.image.getImgHeight() - 1) {
-                        x = 0;
-                        y++;
-                    } else {
-                        x = 0;
-                        y = 0;
-                    }
-                }
-            } else if (ind.equals("01")) {
-                if (sc == 'R') {
-                    String bin = this.intToBinary(r);
-                    res = res + bin.substring(bin.length() - 2);
-                } else if (sc == 'G') {
-                    String bin = this.intToBinary(g);
-                    res = res + bin.substring(bin.length() - 2);
-                } else {
-                    String bin = this.intToBinary(b);
-                    res = res + bin.substring(bin.length() - 2);
-                }
-                if (x < this.image.getImgWidth() - 1) {
-                    x++;
-                } else {
-                    if (y < this.image.getImgHeight() - 1) {
-                        x = 0;
-                        y++;
-                    } else {
-                        x = 0;
-                        y = 0;
-                    }
-                }
-                rms = rms + 2;
-            } else if (ind.equals("10")) {
-                if (fc == 'R') {
-                    String bin = this.intToBinary(r);
-                    res = res + bin.substring(bin.length() - 2);
-                } else if (fc == 'G') {
-                    String bin = this.intToBinary(g);
-                    res = res + bin.substring(bin.length() - 2);
-                } else {
-                    String bin = this.intToBinary(b);
-                    res = res + bin.substring(bin.length() - 2);
-                }
-                if (x < this.image.getImgWidth() - 1) {
-                    x++;
-                } else {
-                    if (y < this.image.getImgHeight() - 1) {
-                        x = 0;
-                        y++;
-                    } else {
-                        x = 0;
-                        y = 0;
-                    }
-                }
-                rms = rms + 2;
-            } else {
-                if (fc == 'R') {
-                    String bin = this.intToBinary(r);
-                    res = res + bin.substring(bin.length() - 2);
-                    rms = rms + 2;
-                    if (rms < bitLength - 1) {
-                        if (sc == 'G') {
-                            String sbin = this.intToBinary(g);
-                            res = res + sbin.substring(sbin.length() - 2);
-                        } else {
-                            String sbin = this.intToBinary(b);
-                            res = res + sbin.substring(sbin.length() - 2);
-                        }
-                    }
-                } else if (fc == 'G') {
-                    String bin = this.intToBinary(g);
-                    res = res + bin.substring(bin.length() - 2);
-                    rms = rms + 2;
-                    if (rms < bitLength - 1) {
-                        if (sc == 'B') {
-                            String sbin = this.intToBinary(b);
-                            res = res + sbin.substring(sbin.length() - 2);
-                        } else {
-                            String sbin = this.intToBinary(r);
-                            res = res + sbin.substring(sbin.length() - 2);
-                        }
-                    }
-                } else {
-                    String bin = this.intToBinary(b);
-                    res = res + bin.substring(bin.length() - 2);
-                    rms = rms + 2;
-                    if (rms < bitLength - 1) {
-                        if (sc == 'R') {
-                            String sbin = this.intToBinary(r);
-                            res = res + sbin.substring(sbin.length() - 2);
-                        } else {
-                            String sbin = this.intToBinary(g);
-                            res = res + sbin.substring(sbin.length() - 2);
-                        }
-                    }
-                }
-                if (x < this.image.getImgWidth() - 1) {
-                    x++;
-                } else {
-                    if (y < this.image.getImgHeight() - 1) {
-                        x = 0;
-                        y++;
-                    } else {
-                        x = 0;
-                        y = 0;
-                    }
-                }
-                rms = rms + 2;
-            }
-        }
-        return this.binaryToSecretData(res);
-    }
-
+    
+//    public String extractSecretData(ImageProcessor image) {
+//        String res = "";
+//        int x = 0;
+//        int y = 0;
+//        String secretLengthBinary = "";
+//        for (int i = 0; i < 8; i++) {
+//            int r = image.getRedValue(x, y);
+//            int g = image.getGreenValue(x, y);
+//            int b = image.getBlueValue(x, y);
+//            
+//            
+//        }
+//        
+//        char ic = this.getIndicatorChannel(secretLength);
+//        char fc = this.get1stChannel(secretLength);
+//        char sc = this.get2ndChannel(secretLength);
+//        int bitLength = secretLength * 8;
+//        int rms = 0;
+//        while (rms < bitLength) {
+//            String ind = this.getIndicatorValue(x, y, secretLength);
+//            int r = this.image.getRedValue(x, y);
+//            int g = this.image.getGreenValue(x, y);
+//            int b = this.image.getBlueValue(x, y);
+//            if (ind.equals("00")) {
+//                if (x < this.image.getImgWidth() - 1) {
+//                    x++;
+//                } else {
+//                    if (y < this.image.getImgHeight() - 1) {
+//                        x = 0;
+//                        y++;
+//                    } else {
+//                        x = 0;
+//                        y = 0;
+//                    }
+//                }
+//            } else if (ind.equals("01")) {
+//                if (sc == 'R') {
+//                    String bin = this.intToBinary(r);
+//                    res = res + bin.substring(bin.length() - 2);
+//                } else if (sc == 'G') {
+//                    String bin = this.intToBinary(g);
+//                    res = res + bin.substring(bin.length() - 2);
+//                } else {
+//                    String bin = this.intToBinary(b);
+//                    res = res + bin.substring(bin.length() - 2);
+//                }
+//                if (x < this.image.getImgWidth() - 1) {
+//                    x++;
+//                } else {
+//                    if (y < this.image.getImgHeight() - 1) {
+//                        x = 0;
+//                        y++;
+//                    } else {
+//                        x = 0;
+//                        y = 0;
+//                    }
+//                }
+//                rms = rms + 2;
+//            } else if (ind.equals("10")) {
+//                if (fc == 'R') {
+//                    String bin = this.intToBinary(r);
+//                    res = res + bin.substring(bin.length() - 2);
+//                } else if (fc == 'G') {
+//                    String bin = this.intToBinary(g);
+//                    res = res + bin.substring(bin.length() - 2);
+//                } else {
+//                    String bin = this.intToBinary(b);
+//                    res = res + bin.substring(bin.length() - 2);
+//                }
+//                if (x < this.image.getImgWidth() - 1) {
+//                    x++;
+//                } else {
+//                    if (y < this.image.getImgHeight() - 1) {
+//                        x = 0;
+//                        y++;
+//                    } else {
+//                        x = 0;
+//                        y = 0;
+//                    }
+//                }
+//                rms = rms + 2;
+//            } else {
+//                if (fc == 'R') {
+//                    String bin = this.intToBinary(r);
+//                    res = res + bin.substring(bin.length() - 2);
+//                    rms = rms + 2;
+//                    if (rms < bitLength - 1) {
+//                        if (sc == 'G') {
+//                            String sbin = this.intToBinary(g);
+//                            res = res + sbin.substring(sbin.length() - 2);
+//                        } else {
+//                            String sbin = this.intToBinary(b);
+//                            res = res + sbin.substring(sbin.length() - 2);
+//                        }
+//                    }
+//                } else if (fc == 'G') {
+//                    String bin = this.intToBinary(g);
+//                    res = res + bin.substring(bin.length() - 2);
+//                    rms = rms + 2;
+//                    if (rms < bitLength - 1) {
+//                        if (sc == 'B') {
+//                            String sbin = this.intToBinary(b);
+//                            res = res + sbin.substring(sbin.length() - 2);
+//                        } else {
+//                            String sbin = this.intToBinary(r);
+//                            res = res + sbin.substring(sbin.length() - 2);
+//                        }
+//                    }
+//                } else {
+//                    String bin = this.intToBinary(b);
+//                    res = res + bin.substring(bin.length() - 2);
+//                    rms = rms + 2;
+//                    if (rms < bitLength - 1) {
+//                        if (sc == 'R') {
+//                            String sbin = this.intToBinary(r);
+//                            res = res + sbin.substring(sbin.length() - 2);
+//                        } else {
+//                            String sbin = this.intToBinary(g);
+//                            res = res + sbin.substring(sbin.length() - 2);
+//                        }
+//                    }
+//                }
+//                if (x < this.image.getImgWidth() - 1) {
+//                    x++;
+//                } else {
+//                    if (y < this.image.getImgHeight() - 1) {
+//                        x = 0;
+//                        y++;
+//                    } else {
+//                        x = 0;
+//                        y = 0;
+//                    }
+//                }
+//                rms = rms + 2;
+//            }
+//        }
+//        return this.binaryToSecretData(res);
+//    }
 }

@@ -249,7 +249,7 @@ public class ExtractGUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "masukkan nomor piksel awal!", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
-                    PITSteganography pit = new PITSteganography();
+                    MPITSteganography pit = new MPITSteganography();
                     ImageProcessor img = new ImageProcessor(stegoImagePath);
                     pit.setCoverImage(img);
                     int random = Integer.parseInt(randomNumberTextField.getText());

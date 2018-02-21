@@ -19,7 +19,7 @@ public class HideGUI extends javax.swing.JFrame {
 
     public String coverImagePath;
     public String stegoImagePath;
-    public PITSteganography pit;
+    public MPITSteganography pit;
     public LSBSteganography lsb;
 
     /**
@@ -30,7 +30,7 @@ public class HideGUI extends javax.swing.JFrame {
         generateButton.setVisible(false);
         randomNumberTextField.setText("0");
         this.lsb = new LSBSteganography();
-        this.pit = new PITSteganography();
+        this.pit = new MPITSteganography();
     }
 
     /**

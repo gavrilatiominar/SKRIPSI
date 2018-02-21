@@ -27,8 +27,8 @@ public abstract class Steganography {
         this.secretData = secretData;
         this.secretDataLength = this.secretData.length();
     }
-    
-    public void setCoverImage(ImageProcessor image){
+
+    public void setCoverImage(ImageProcessor image) {
         this.image = image;
     }
 
@@ -66,8 +66,10 @@ public abstract class Steganography {
 
     public String intToBinary(int val) {
         String res = Integer.toBinaryString(val);
-        if (res.length() < 2) {
-            res = "00" + res;
+        if (res.length() < 8) {
+            for (int i = res.length(); i < 8; i++) {
+                res = "0" + res;
+            }
         }
         return res;
     }
