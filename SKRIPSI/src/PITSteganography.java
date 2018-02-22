@@ -207,7 +207,6 @@ public class PITSteganography extends Steganography {
             if (y < this.image.getImgHeight() - 1) {
                 x = 0;
                 y++;
-
             }
         }
         char ic = this.getIndicatorChannel(this.secretDataLength);
@@ -445,9 +444,6 @@ public class PITSteganography extends Steganography {
                     if (y < image.getImgHeight() - 1) {
                         x = 0;
                         y++;
-                    } else {
-                        x = 0;
-                        y = 0;
                     }
                 }
             }
@@ -458,9 +454,6 @@ public class PITSteganography extends Steganography {
             if (y < image.getImgHeight() - 1) {
                 x = 0;
                 y++;
-            } else {
-                x = 0;
-                y = 0;
             }
         }
         int secretLength = this.binaryToInt(secretLengthBinary);
@@ -481,9 +474,6 @@ public class PITSteganography extends Steganography {
                     if (y < image.getImgHeight() - 1) {
                         x = 0;
                         y++;
-                    } else {
-                        x = 0;
-                        y = 0;
                     }
                 }
             } else if (ind.equals("01")) {
@@ -503,9 +493,6 @@ public class PITSteganography extends Steganography {
                     if (y < image.getImgHeight() - 1) {
                         x = 0;
                         y++;
-                    } else {
-                        x = 0;
-                        y = 0;
                     }
                 }
                 rms = rms + 2;
@@ -526,9 +513,6 @@ public class PITSteganography extends Steganography {
                     if (y < image.getImgHeight() - 1) {
                         x = 0;
                         y++;
-                    } else {
-                        x = 0;
-                        y = 0;
                     }
                 }
                 rms = rms + 2;
@@ -579,9 +563,6 @@ public class PITSteganography extends Steganography {
                     if (y < image.getImgHeight() - 1) {
                         x = 0;
                         y++;
-                    } else {
-                        x = 0;
-                        y = 0;
                     }
                 }
                 rms = rms + 2;

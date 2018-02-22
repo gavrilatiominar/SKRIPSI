@@ -97,7 +97,6 @@ public class LSBSteganography extends Steganography {
                     if (y < this.image.getImgHeight() - 1) {
                         x = 0;
                         y++;
-
                     }
                 }
             }
@@ -139,7 +138,7 @@ public class LSBSteganography extends Steganography {
                     if (y < image.getImgHeight() - 1) {
                         x = 0;
                         y++;
-                    }
+                    } 
                 }
             }
 
