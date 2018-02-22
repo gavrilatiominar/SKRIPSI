@@ -281,6 +281,7 @@ public class HideGUI extends javax.swing.JFrame {
             stegoKeyTextField.setVisible(true);
             generateButton.setVisible(true);
         }
+        psnrTextField.setText(null);
     }//GEN-LAST:event_metodeComboBoxActionPerformed
 
     private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
