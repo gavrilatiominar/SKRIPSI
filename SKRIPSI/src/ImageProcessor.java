@@ -21,7 +21,7 @@ public class ImageProcessor {
 
     public ImageProcessor(String imgPath) throws IOException {
         this.imgPath = imgPath;
-        File f = new File(imgPath);      
+        File f = new File(imgPath);
         this.img = ImageIO.read(f);
     }
 
@@ -97,5 +97,25 @@ public class ImageProcessor {
             }
         }
         return pixel;
+    }
+
+    public double calculatePSNR(ImageProcessor stegoImage) {
+        double sumR = 0;
+        double sumG = 0;
+        double sumB = 0;
+        for (int y = 0; y < img.getHeight(); y++) {
+            for (int x = 0; x < img.getWidth(); x++) {
+                int pxl1 = img.getRGB(x, y);
+                int pxl2 = stegoImage.img.getRGB(x, y);
+                Color c1 = new Color(pxl1);
+                Color c2 = new Color(pxl2);
+                sumR = sumR + Math.pow(c1.getRed() - c2.getRed(), 2);
+                sumG = sumG + Math.pow(c1.getGreen() - c2.getGreen(), 2);
+                sumB = sumB + Math.pow(c1.getBlue() - c2.getBlue(), 2);
+            }
+        }
+        double mse = (sumR+sumG+sumB)/(3*img.getWidth()*img.getHeight());
+        double psnr = 10*(Math.log10(Math.pow(255, 2)/mse));
+        return psnr;
     }
 }
