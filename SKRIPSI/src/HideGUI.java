@@ -60,7 +60,6 @@ public class HideGUI extends javax.swing.JFrame {
         resetButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         psnrTextField = new javax.swing.JTextField();
-        checkPSNRButton = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -158,13 +157,6 @@ public class HideGUI extends javax.swing.JFrame {
 
         psnrTextField.setEditable(false);
 
-        checkPSNRButton.setText("Check");
-        checkPSNRButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                checkPSNRButtonMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -196,9 +188,7 @@ public class HideGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(psnrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(checkPSNRButton)))
+                        .addComponent(psnrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -231,9 +221,8 @@ public class HideGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(psnrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(checkPSNRButton))
-                .addContainerGap(26, Short.MAX_VALUE))
+                    .addComponent(psnrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -254,6 +243,7 @@ public class HideGUI extends javax.swing.JFrame {
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
         // TODO add your handling code here:
         stegoKeyTextField.setText(null);
+        psnrTextField.setText(null);
         JFileChooser browse = new JFileChooser();
         int returnName = browse.showOpenDialog(null);
         if (returnName == JFileChooser.APPROVE_OPTION) {
@@ -386,6 +376,14 @@ public class HideGUI extends javax.swing.JFrame {
                 Logger.getLogger(HideGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        try {
+            // TODO add your handling code here:
+            ImageProcessor img = new ImageProcessor(coverImagePath);
+            ImageProcessor imgAfter = new ImageProcessor(stegoImagePath);
+            psnrTextField.setText(Double.toString(img.calculatePSNR(imgAfter)));
+        } catch (IOException ex) {
+            Logger.getLogger(HideGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_prosesButtonMouseClicked
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
@@ -405,18 +403,8 @@ public class HideGUI extends javax.swing.JFrame {
     private void secretDataTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_secretDataTextFieldFocusGained
         // TODO add your handling code here:        
         stegoKeyTextField.setText(null);
+        psnrTextField.setText(null);
     }//GEN-LAST:event_secretDataTextFieldFocusGained
-
-    private void checkPSNRButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkPSNRButtonMouseClicked
-        try {
-            // TODO add your handling code here:
-            ImageProcessor img = new ImageProcessor(coverImagePath);
-            ImageProcessor imgAfter = new ImageProcessor(stegoImagePath);
-            psnrTextField.setText(Double.toString(img.calculatePSNR(imgAfter)));
-        } catch (IOException ex) {
-            Logger.getLogger(HideGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_checkPSNRButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -457,7 +445,6 @@ public class HideGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseButton;
-    private javax.swing.JButton checkPSNRButton;
     private javax.swing.JTextField coverImageTextField;
     private javax.swing.JButton generateButton;
     private javax.swing.JFrame jFrame1;
