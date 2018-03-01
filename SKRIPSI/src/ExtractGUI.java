@@ -46,8 +46,9 @@ public class ExtractGUI extends javax.swing.JFrame {
         stegoKeyTextField = new javax.swing.JTextField();
         prosesButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        hasilEkstraksiTextField = new javax.swing.JTextField();
         resetButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        hasilEkstraksiTextArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ekstraksi Pesan Rahasia");
@@ -79,6 +80,11 @@ public class ExtractGUI extends javax.swing.JFrame {
 
         stegoKeyLabel.setText("Stego Key");
 
+        stegoKeyTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                stegoKeyTextFieldFocusGained(evt);
+            }
+        });
         stegoKeyTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stegoKeyTextFieldActionPerformed(evt);
@@ -94,13 +100,6 @@ public class ExtractGUI extends javax.swing.JFrame {
 
         jLabel5.setText("Hasil Ekstraksi");
 
-        hasilEkstraksiTextField.setEditable(false);
-        hasilEkstraksiTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hasilEkstraksiTextFieldActionPerformed(evt);
-            }
-        });
-
         resetButton.setText("Reset");
         resetButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -110,6 +109,16 @@ public class ExtractGUI extends javax.swing.JFrame {
                 resetButtonMouseEntered(evt);
             }
         });
+
+        hasilEkstraksiTextArea.setEditable(false);
+        hasilEkstraksiTextArea.setColumns(20);
+        hasilEkstraksiTextArea.setRows(5);
+        hasilEkstraksiTextArea.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                hasilEkstraksiTextAreaFocusGained(evt);
+            }
+        });
+        jScrollPane1.setViewportView(hasilEkstraksiTextArea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,11 +138,11 @@ public class ExtractGUI extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(prosesButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(resetButton))
-                            .addComponent(hasilEkstraksiTextField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
@@ -170,25 +179,21 @@ public class ExtractGUI extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(hasilEkstraksiTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void hasilEkstraksiTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hasilEkstraksiTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_hasilEkstraksiTextFieldActionPerformed
-
     private void metodeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_metodeComboBoxActionPerformed
         // TODO add your handling code here:
         if (metodeComboBox.getSelectedIndex() == 1) {
-            hasilEkstraksiTextField.setText(null);
+            hasilEkstraksiTextArea.setText(null);
             stegoKeyLabel.setVisible(false);
             stegoKeyTextField.setVisible(false);
         } else {
-            hasilEkstraksiTextField.setText(null);
+            hasilEkstraksiTextArea.setText(null);
             stegoKeyLabel.setVisible(true);
             stegoKeyTextField.setVisible(true);
         }
@@ -196,6 +201,7 @@ public class ExtractGUI extends javax.swing.JFrame {
 
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
         // TODO add your handling code here:
+        hasilEkstraksiTextArea.setText(null);
         stegoKeyTextField.setText(null);
         JFileChooser browse = new JFileChooser();
         int returnName = browse.showOpenDialog(null);
@@ -232,7 +238,7 @@ public class ExtractGUI extends javax.swing.JFrame {
                     lsb.setCoverImage(img);
                     String[] stegokey = stegoKeyTextField.getText().split("-");
                     String result = lsb.extractSecretData(img, Integer.parseInt(stegokey[0]));
-                    hasilEkstraksiTextField.setText(result);
+                    hasilEkstraksiTextArea.setText(result);
                 } catch (IOException ex) {
                     Logger.getLogger(ExtractGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -246,7 +252,7 @@ public class ExtractGUI extends javax.swing.JFrame {
                     ImageProcessor img = new ImageProcessor(stegoImagePath);
                     pit.setCoverImage(img);
                     String result = pit.extractSecretData(img);
-                    hasilEkstraksiTextField.setText(result);
+                    hasilEkstraksiTextArea.setText(result);
                 } catch (IOException ex) {
                     Logger.getLogger(ExtractGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -265,7 +271,7 @@ public class ExtractGUI extends javax.swing.JFrame {
                     mpit.setCoverImage(img);
                     String[] stegokey = stegoKeyTextField.getText().split("-");
                     String result = mpit.extractSecretData(img, Integer.parseInt(stegokey[1]), Integer.parseInt(stegokey[0]));
-                    hasilEkstraksiTextField.setText(result);
+                    hasilEkstraksiTextArea.setText(result);
                 } catch (IOException ex) {
                     Logger.getLogger(ExtractGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -275,7 +281,6 @@ public class ExtractGUI extends javax.swing.JFrame {
 
     private void stegoKeyTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stegoKeyTextFieldActionPerformed
         // TODO add your handling code here:
-        hasilEkstraksiTextField.setText(null);
     }//GEN-LAST:event_stegoKeyTextFieldActionPerformed
 
     private void resetButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetButtonMouseEntered
@@ -286,8 +291,17 @@ public class ExtractGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         stegoImageTextField.setText(null);
         stegoKeyTextField.setText(null);
-        hasilEkstraksiTextField.setText(null);
+        hasilEkstraksiTextArea.setText(null);
     }//GEN-LAST:event_resetButtonMouseClicked
+
+    private void hasilEkstraksiTextAreaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_hasilEkstraksiTextAreaFocusGained
+        // TODO add your handling code here:        
+    }//GEN-LAST:event_hasilEkstraksiTextAreaFocusGained
+
+    private void stegoKeyTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_stegoKeyTextFieldFocusGained
+        // TODO add your handling code here:        
+        hasilEkstraksiTextArea.setText(null);
+    }//GEN-LAST:event_stegoKeyTextFieldFocusGained
 
     /**
      * @param args the command line arguments
@@ -326,10 +340,11 @@ public class ExtractGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseButton;
-    private javax.swing.JTextField hasilEkstraksiTextField;
+    private javax.swing.JTextArea hasilEkstraksiTextArea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> metodeComboBox;
     private javax.swing.JButton prosesButton;
     private javax.swing.JButton resetButton;

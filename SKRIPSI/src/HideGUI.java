@@ -324,8 +324,10 @@ public class HideGUI extends javax.swing.JFrame {
     private void prosesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prosesButtonMouseClicked
         // TODO add your handling code here:
         if (metodeComboBox.getSelectedIndex() == 0) {
-            if (secretDataTextField.getText().isEmpty() && coverImageTextField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Masukkan secret data dan pilih cover image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
+            if (secretDataTextField.getText().isEmpty() && coverImageTextField.getText().isEmpty() && stegoKeyTextField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Masukkan secret data, pilih cover image dari direktori, dan bangkitkan stego key!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if(stegoKeyTextField.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Bangkitkan stego key!", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (secretDataTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Masukkan secret data!", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (coverImageTextField.getText().isEmpty()) {
