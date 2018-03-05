@@ -189,14 +189,15 @@ public class ExtractGUI extends javax.swing.JFrame {
     private void metodeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_metodeComboBoxActionPerformed
         // TODO add your handling code here:
         if (metodeComboBox.getSelectedIndex() == 1) {
-            hasilEkstraksiTextArea.setText(null);
             stegoKeyLabel.setVisible(false);
             stegoKeyTextField.setVisible(false);
         } else {
-            hasilEkstraksiTextArea.setText(null);
             stegoKeyLabel.setVisible(true);
             stegoKeyTextField.setVisible(true);
+            stegoKeyTextField.setText(null);
+
         }
+        hasilEkstraksiTextArea.setText(null);
     }//GEN-LAST:event_metodeComboBoxActionPerformed
 
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
@@ -227,6 +228,8 @@ public class ExtractGUI extends javax.swing.JFrame {
         if (metodeComboBox.getSelectedIndex() == 0) {
             if (stegoImageTextField.getText().isEmpty() && stegoKeyTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori dan masukkan stego key!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (!stegoKeyTextField.getText().substring(stegoKeyTextField.getText().length() - 1).equals("0")) {
+                JOptionPane.showMessageDialog(null, "Stego key salah!", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (stegoImageTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (stegoKeyTextField.getText().isEmpty()) {

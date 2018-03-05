@@ -270,6 +270,7 @@ public class HideGUI extends javax.swing.JFrame {
             stegoKeyLabel.setVisible(true);
             stegoKeyTextField.setVisible(true);
             generateButton.setVisible(true);
+
         }
         psnrTextField.setText(null);
     }//GEN-LAST:event_metodeComboBoxActionPerformed
@@ -326,7 +327,7 @@ public class HideGUI extends javax.swing.JFrame {
         if (metodeComboBox.getSelectedIndex() == 0) {
             if (secretDataTextField.getText().isEmpty() && coverImageTextField.getText().isEmpty() && stegoKeyTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Masukkan secret data, pilih cover image dari direktori, dan bangkitkan stego key!", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if(stegoKeyTextField.getText().isEmpty()){
+            } else if (stegoKeyTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Bangkitkan stego key!", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (secretDataTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Masukkan secret data!", "Error", JOptionPane.ERROR_MESSAGE);
