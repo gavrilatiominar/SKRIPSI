@@ -16,35 +16,35 @@ public class Tester {
 
     public static void main(String[] args) throws IOException {
         //lsb tester
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Secret Data: ");
-        String secret = sc.nextLine();
-        System.out.print("Path: ");
-        String filePath = sc.nextLine();
-        System.out.println();
-
-        LSBSteganography lsb = new LSBSteganography();
-        lsb.setSecretData(secret);
-        ImageProcessor image = new ImageProcessor(filePath);
-        lsb.setCoverImage(image);
-        System.out.println("width: " + lsb.image.getImgWidth());
-        System.out.println("height: " + lsb.image.getImgHeight());
-        System.out.println();
-
-        lsb.image.getPixels(lsb.image.img);
-        int[][][] pixelAwal = lsb.image.getPixels(lsb.image.img);
-        int nopixel = 0;
-        for (int y = 0; y < lsb.image.getImgHeight(); y++) {
-            for (int x = 0; x < lsb.image.getImgWidth(); x++) {
-                System.out.println(nopixel);
-                System.out.println("red: " + pixelAwal[y][x][0]);
-                System.out.println("green: " + pixelAwal[y][x][1]);
-                System.out.println("blue: " + pixelAwal[y][x][2]);
-                System.out.println();
-                nopixel++;
-            }
-        }
-        System.out.println();
+//        Scanner sc = new Scanner(System.in);
+//        System.out.print("Secret Data: ");
+//        String secret = sc.nextLine();
+//        System.out.print("Path: ");
+//        String filePath = sc.nextLine();
+//        System.out.println();
+//
+//        LSBSteganography lsb = new LSBSteganography();
+//        lsb.setSecretData(secret);
+//        ImageProcessor image = new ImageProcessor(filePath);
+//        lsb.setCoverImage(image);
+//        System.out.println("width: " + lsb.image.getImgWidth());
+//        System.out.println("height: " + lsb.image.getImgHeight());
+//        System.out.println();
+//
+//        lsb.image.getPixels(lsb.image.img);
+//        int[][][] pixelAwal = lsb.image.getPixels(lsb.image.img);
+//        int nopixel = 0;
+//        for (int y = 0; y < lsb.image.getImgHeight(); y++) {
+//            for (int x = 0; x < lsb.image.getImgWidth(); x++) {
+//                System.out.println(nopixel);
+//                System.out.println("red: " + pixelAwal[y][x][0]);
+//                System.out.println("green: " + pixelAwal[y][x][1]);
+//                System.out.println("blue: " + pixelAwal[y][x][2]);
+//                System.out.println();
+//                nopixel++;
+//            }
+//        }
+//        System.out.println();
 //
 //        lsb.hideSecretData();
 //        lsb.image.createImage();
@@ -128,7 +128,6 @@ public class Tester {
 //        int sl = sc.nextInt();
 //        System.out.println(mpit.extractSecretData(img1, rand, sl));        
 //        System.out.println("The End");
-
         //pit tester
 //        Scanner sc = new Scanner(System.in);
 //        System.out.print("Secret Data: ");
@@ -180,7 +179,6 @@ public class Tester {
 //            }
 //        }
 //        System.out.println(pit.extractSecretData(img1));
-
         //image processor tester
 //        Scanner sc = new Scanner(System.in);
 //        System.out.print("original image path: ");
@@ -191,5 +189,16 @@ public class Tester {
 //        String path2 = sc.nextLine();
 //        ImageProcessor img2 = new ImageProcessor(path2);
 //        System.out.println("psnr = "+img1.calculatePSNR(img2));
+
+        //chisquare tester
+        Scanner sc = new Scanner(System.in);
+        ChiSquare chi = new ChiSquare();
+        System.out.println("image path: ");
+        String path = sc.nextLine();
+        chi.setImage(path);
+        chi.setPixelVal();
+        System.out.println("red: " + chi.chiAnalysisR());
+        System.out.println("green: " + chi.chiAnalysisG());
+        System.out.println("blue: " + chi.chiAnalysisB());
     }
 }
