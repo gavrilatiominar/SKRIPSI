@@ -12,5 +12,7 @@ import org.apache.commons.math3.stat.inference.ChiSquareTest;
  * @author Gavrila Sianturi
  */
 public class ChiSquare {
+    
+    
 
 }
