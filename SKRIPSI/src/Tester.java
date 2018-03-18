@@ -189,8 +189,15 @@ public class Tester {
 //        String path2 = sc.nextLine();
 //        ImageProcessor img2 = new ImageProcessor(path2);
 //        System.out.println("psnr = "+img1.calculatePSNR(img2));
-
         //chisquare tester
-
+        Scanner sc = new Scanner(System.in);
+        ChiSquareAttack chi = new ChiSquareAttack();
+        System.out.println("Image Path: ");
+        String path = sc.nextLine();
+        chi.setImage(path);
+        double[] pr = chi.chiAnalysis();
+        System.out.println(pr[0]);
+        System.out.println(pr[1]);
+        System.out.println(pr[2]);
     }
 }

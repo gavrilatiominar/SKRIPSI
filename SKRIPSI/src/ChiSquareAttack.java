@@ -40,6 +40,8 @@ public class ChiSquareAttack {
         this.YG = new double[64];
         this.YB = new double[64];
         this.ZR = new double[64];
+        this.ZG = new double[64];
+        this.ZB = new double[64];
         for (int i = 0; i < 64; i++) {
             ZR[i] = 1;
         }
