@@ -63,7 +63,16 @@ public class ChiSquareAttack {
 
     public String get2LSB(int x) {
         String binary = Integer.toBinaryString(x);
-        String res = binary.substring(binary.length() - 2);
+        String res;
+        if (binary.length() < 2) {
+            if (x == 0) {
+                res = "00";
+            } else {
+                res = "01";
+            }
+        } else {
+            res = binary.substring(binary.length() - 2);
+        }
         return res;
     }
 
@@ -217,19 +226,25 @@ public class ChiSquareAttack {
                         y++;
                     }
                 }
-                if (byteRead == (w * h * 3) - 1) {
+                if (byteRead == w * h * 3) {
                     for (int i = 0; i < 64; i++) {
-                        this.ZR[i] = Math.round((this.XR[i] + this.YR[i]) / 2.0);
+                        if (this.XR[i] != 0 && this.YR[i] != 0) {
+                            this.ZR[i] = Math.round((this.XR[i] + this.YR[i]) / 2.0);
+                        }
                     }
-                    this.chiSquaredR[(byteRead / chunkSize) - 1] = chi.chiSquareTest(ZR, XR);
+                    this.chiSquaredR[(byteRead / chunkSize)] = chi.chiSquareTest(ZR, XR);
                     for (int i = 0; i < 64; i++) {
-                        this.ZG[i] = Math.round((this.XG[i] + this.YG[i]) / 2.0);
+                        if (this.XG[i] != 0 && this.YG[i] != 0) {
+                            this.ZG[i] = Math.round((this.XG[i] + this.YG[i]) / 2.0);
+                        }
                     }
-                    this.chiSquaredG[(byteRead / chunkSize) - 1] = chi.chiSquareTest(ZG, XG);
+                    this.chiSquaredG[(byteRead / chunkSize)] = chi.chiSquareTest(ZG, XG);
                     for (int i = 0; i < 64; i++) {
-                        this.ZB[i] = Math.round((this.XB[i] + this.YB[i]) / 2.0);
+                        if (this.XB[i] != 0 && this.YB[i] != 0) {
+                            this.ZB[i] = Math.round((this.XB[i] + this.YB[i]) / 2.0);
+                        }
                     }
-                    this.chiSquaredB[(byteRead / chunkSize) - 1] = chi.chiSquareTest(ZB, XB);
+                    this.chiSquaredB[(byteRead / chunkSize)] = chi.chiSquareTest(ZB, XB);
                 }
             }
         }
