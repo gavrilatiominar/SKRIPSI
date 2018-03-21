@@ -199,5 +199,7 @@ public class Tester {
         System.out.println(pr[0]);
         System.out.println(pr[1]);
         System.out.println(pr[2]);
+        System.out.println(chi.validResult(7.04));
+        System.out.println(Math.round(0/2));
     }
 }

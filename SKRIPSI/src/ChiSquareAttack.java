@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import org.apache.commons.math3.stat.inference.ChiSquareTest;
 
 /**
@@ -11,7 +12,7 @@ import org.apache.commons.math3.stat.inference.ChiSquareTest;
  * @author Cuneyt Caliskan
  */
 public class ChiSquareAttack {
-
+    
     ImageProcessor ip;
     int[][][] pixelVal;
     long[] XR;
@@ -30,7 +31,7 @@ public class ChiSquareAttack {
     int chunkSize = 128;
     int numOfChunks;
     ChiSquareTest chi;
-
+    
     public ChiSquareAttack() {
         this.chi = new ChiSquareTest();
         this.XR = new long[64];
@@ -52,15 +53,15 @@ public class ChiSquareAttack {
             ZB[i] = 1;
         }
     }
-
+    
     public void setImage(String path) throws IOException {
         this.ip = new ImageProcessor(path);
     }
-
+    
     public void setPixelValue() {
         this.pixelVal = this.ip.getPixels(this.ip.img);
     }
-
+    
     public String get2LSB(int x) {
         String binary = Integer.toBinaryString(x);
         String res;
@@ -75,15 +76,16 @@ public class ChiSquareAttack {
         }
         return res;
     }
-
+    
     public double validResult(double x) {
         x = Math.abs(x);
-        if (x > 1) {
-            return 1;
+        if (x >= 1) {
+            return 1.0;
+        } else {
+            return x;
         }
-        return x;
     }
-
+    
     public double[] chiAnalysis() {
         int w = this.ip.getImgWidth();
         int h = this.ip.getImgHeight();
@@ -107,19 +109,19 @@ public class ChiSquareAttack {
                 byteRead++;
                 if (byteRead % chunkSize == 0) {
                     for (int i = 0; i < 64; i++) {
-                        if (this.XR[i] != 0 && this.YR[i] != 0) {
+                        if (!(this.XR[i] == 0 && this.YR[i] == 0)) {
                             this.ZR[i] = Math.round((this.XR[i] + this.YR[i]) / 2.0);
                         }
                     }
                     this.chiSquaredR[(byteRead / chunkSize) - 1] = chi.chiSquareTest(ZR, XR);
                     for (int i = 0; i < 64; i++) {
-                        if (this.XG[i] != 0 && this.YG[i] != 0) {
+                        if (!(this.XG[i] == 0 && this.YG[i] == 0)) {
                             this.ZG[i] = Math.round((this.XG[i] + this.YG[i]) / 2.0);
                         }
                     }
                     this.chiSquaredG[(byteRead / chunkSize) - 1] = chi.chiSquareTest(ZG, XG);
                     for (int i = 0; i < 64; i++) {
-                        if (this.XB[i] != 0 && this.YB[i] != 0) {
+                        if (!(this.XB[i] == 0 && this.YB[i] == 0)) {
                             this.ZB[i] = Math.round((this.XB[i] + this.YB[i]) / 2.0);
                         }
                     }
@@ -148,19 +150,19 @@ public class ChiSquareAttack {
                 byteRead++;
                 if (byteRead % chunkSize == 0) {
                     for (int i = 0; i < 64; i++) {
-                        if (this.XR[i] != 0 && this.YR[i] != 0) {
+                        if (!(this.XR[i] == 0 && this.YR[i] == 0)) {
                             this.ZR[i] = Math.round((this.XR[i] + this.YR[i]) / 2.0);
                         }
                     }
                     this.chiSquaredR[(byteRead / chunkSize) - 1] = chi.chiSquareTest(ZR, XR);
                     for (int i = 0; i < 64; i++) {
-                        if (this.XG[i] != 0 && this.YG[i] != 0) {
+                        if (!(this.XG[i] == 0 && this.YG[i] == 0)) {
                             this.ZG[i] = Math.round((this.XG[i] + this.YG[i]) / 2.0);
                         }
                     }
                     this.chiSquaredG[(byteRead / chunkSize) - 1] = chi.chiSquareTest(ZG, XG);
                     for (int i = 0; i < 64; i++) {
-                        if (this.XB[i] != 0 && this.YB[i] != 0) {
+                        if (!(this.XB[i] == 0 && this.YB[i] == 0)) {
                             this.ZB[i] = Math.round((this.XB[i] + this.YB[i]) / 2.0);
                         }
                     }
@@ -189,19 +191,19 @@ public class ChiSquareAttack {
                 byteRead++;
                 if (byteRead % chunkSize == 0) {
                     for (int i = 0; i < 64; i++) {
-                        if (this.XR[i] != 0 && this.YR[i] != 0) {
+                        if (!(this.XR[i] == 0 && this.YR[i] == 0)) {
                             this.ZR[i] = Math.round((this.XR[i] + this.YR[i]) / 2.0);
                         }
                     }
                     this.chiSquaredR[(byteRead / chunkSize) - 1] = chi.chiSquareTest(ZR, XR);
                     for (int i = 0; i < 64; i++) {
-                        if (this.XG[i] != 0 && this.YG[i] != 0) {
+                        if (!(this.XG[i] == 0 && this.YG[i] == 0)) {
                             this.ZG[i] = Math.round((this.XG[i] + this.YG[i]) / 2.0);
                         }
                     }
                     this.chiSquaredG[(byteRead / chunkSize) - 1] = chi.chiSquareTest(ZG, XG);
                     for (int i = 0; i < 64; i++) {
-                        if (this.XB[i] != 0 && this.YB[i] != 0) {
+                        if (!(this.XB[i] == 0 && this.YB[i] == 0)) {
                             this.ZB[i] = Math.round((this.XB[i] + this.YB[i]) / 2.0);
                         }
                     }
@@ -228,19 +230,19 @@ public class ChiSquareAttack {
                 }
                 if (byteRead == w * h * 3) {
                     for (int i = 0; i < 64; i++) {
-                        if (this.XR[i] != 0 && this.YR[i] != 0) {
+                        if (!(this.XR[i] == 0 && this.YR[i] == 0)) {
                             this.ZR[i] = Math.round((this.XR[i] + this.YR[i]) / 2.0);
                         }
                     }
                     this.chiSquaredR[(byteRead / chunkSize)] = chi.chiSquareTest(ZR, XR);
                     for (int i = 0; i < 64; i++) {
-                        if (this.XG[i] != 0 && this.YG[i] != 0) {
+                        if (!(this.XG[i] == 0 && this.YG[i] == 0)) {
                             this.ZG[i] = Math.round((this.XG[i] + this.YG[i]) / 2.0);
                         }
                     }
                     this.chiSquaredG[(byteRead / chunkSize)] = chi.chiSquareTest(ZG, XG);
                     for (int i = 0; i < 64; i++) {
-                        if (this.XB[i] != 0 && this.YB[i] != 0) {
+                        if (!(this.XB[i] == 0 && this.YB[i] == 0)) {
                             this.ZB[i] = Math.round((this.XB[i] + this.YB[i]) / 2.0);
                         }
                     }
@@ -257,9 +259,13 @@ public class ChiSquareAttack {
             tempB += chiSquaredB[i];
         }
         double[] probabilityRate = new double[3];
-        probabilityRate[0] = validResult(tempR);
-        probabilityRate[1] = validResult(tempG);
-        probabilityRate[2] = validResult(tempB);
+        DecimalFormat numberFormat = new DecimalFormat("#.#####");
+        String r = numberFormat.format(validResult(tempR / (chunkSize / 3)));
+        String g = numberFormat.format(validResult(tempG / (chunkSize / 3)));
+        String b = numberFormat.format(validResult(tempB / (chunkSize / 3)));
+        probabilityRate[0] = Double.parseDouble(r);
+        probabilityRate[1] = Double.parseDouble(g);
+        probabilityRate[2] = Double.parseDouble(b);
         return probabilityRate;
     }
 }
