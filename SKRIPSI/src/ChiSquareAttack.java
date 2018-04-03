@@ -8,11 +8,11 @@ import java.text.DecimalFormat;
 import org.apache.commons.math3.stat.inference.ChiSquareTest;
 
 /**
- * @version 1.0
- * @author Cuneyt Caliskan
+ * 
+ * 
  */
 public class ChiSquareAttack {
-    
+
     ImageProcessor ip;
     int[][][] pixelVal;
     long[] XR;
@@ -31,7 +31,7 @@ public class ChiSquareAttack {
     int chunkSize = 128;
     int numOfChunks;
     ChiSquareTest chi;
-    
+
     public ChiSquareAttack() {
         this.chi = new ChiSquareTest();
         this.XR = new long[64];
@@ -53,15 +53,15 @@ public class ChiSquareAttack {
             ZB[i] = 1;
         }
     }
-    
+
     public void setImage(String path) throws IOException {
         this.ip = new ImageProcessor(path);
     }
-    
+
     public void setPixelValue() {
         this.pixelVal = this.ip.getPixels(this.ip.img);
     }
-    
+
     public String get2LSB(int x) {
         String binary = Integer.toBinaryString(x);
         String res;
@@ -76,7 +76,7 @@ public class ChiSquareAttack {
         }
         return res;
     }
-    
+
     public double validResult(double x) {
         x = Math.abs(x);
         if (x >= 1) {
@@ -85,7 +85,7 @@ public class ChiSquareAttack {
             return x;
         }
     }
-    
+
     public double[] chiAnalysis() {
         int w = this.ip.getImgWidth();
         int h = this.ip.getImgHeight();
