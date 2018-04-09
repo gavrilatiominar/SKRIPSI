@@ -196,10 +196,10 @@ public class Tester {
         String path = sc.nextLine();
         chi.setImage(path);
         double[] pr = chi.chiAnalysis();
-        System.out.println(pr[0]);
-        System.out.println(pr[1]);
-        System.out.println(pr[2]);
+        System.out.println("red: " + pr[0]);
+        System.out.println("green: " + pr[1]);
+        System.out.println("blue: " + pr[2]);
         System.out.println(chi.validResult(7.04));
-        System.out.println(Math.round(0/2));
+        System.out.println(Math.round(0 / 2));
     }
 }
