@@ -199,7 +199,5 @@ public class Tester {
         System.out.println("red: " + pr[0]);
         System.out.println("green: " + pr[1]);
         System.out.println("blue: " + pr[2]);
-        System.out.println(chi.validResult(7.04));
-        System.out.println(Math.round(0 / 2));
     }
 }
