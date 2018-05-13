@@ -228,12 +228,14 @@ public class ExtractGUI extends javax.swing.JFrame {
         if (metodeComboBox.getSelectedIndex() == 0) {
             if (stegoImageTextField.getText().isEmpty() && stegoKeyTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori dan masukkan stego key!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (stegoImageTextField.getText().isEmpty() && !stegoKeyTextField.getText().substring(stegoKeyTextField.getText().length() - 1).equals("0")) {
+                JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori dan masukkan stego key yang benar!", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (!stegoKeyTextField.getText().substring(stegoKeyTextField.getText().length() - 1).equals("0")) {
                 JOptionPane.showMessageDialog(null, "Stego key salah!", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (stegoImageTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (stegoKeyTextField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Masukkan panjang stego key!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Masukkan stego key!", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
                     LSBSteganography lsb = new LSBSteganography();
@@ -266,7 +268,7 @@ public class ExtractGUI extends javax.swing.JFrame {
             } else if (stegoImageTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
             } else if (stegoKeyTextField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Masukkan panjang stego key!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Masukkan stego key!", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
                     MPITSteganography mpit = new MPITSteganography();
