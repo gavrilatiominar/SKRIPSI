@@ -263,23 +263,31 @@ public class ExtractGUI extends javax.swing.JFrame {
                 }
             }
         } else {
-            if (stegoImageTextField.getText().isEmpty() && stegoKeyTextField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori dan masukkan stego key!", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if (stegoImageTextField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if (stegoKeyTextField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Masukkan stego key!", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                try {
-                    MPITSteganography mpit = new MPITSteganography();
-                    ImageProcessor img = new ImageProcessor(stegoImagePath);
-                    mpit.setCoverImage(img);
-                    String[] stegokey = stegoKeyTextField.getText().split("-");
-                    String result = mpit.extractSecretData(img, Integer.parseInt(stegokey[1]), Integer.parseInt(stegokey[0]));
-                    hasilEkstraksiTextArea.setText(result);
-                } catch (IOException ex) {
-                    Logger.getLogger(ExtractGUI.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                ImageProcessor img1 = new ImageProcessor(stegoImagePath);
+                String[] stegokey1 = stegoKeyTextField.getText().split("-");
+                if (stegoImageTextField.getText().isEmpty() && stegoKeyTextField.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori dan masukkan stego key!", "Error", JOptionPane.ERROR_MESSAGE);
+                } else if (stegoImageTextField.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Pilih stego image dari direktori!", "Error", JOptionPane.ERROR_MESSAGE);
+                } else if (stegoKeyTextField.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Masukkan stego key!", "Error", JOptionPane.ERROR_MESSAGE);
+                } else if (Integer.parseInt(stegokey1[1]) < 0 || Integer.parseInt(stegokey1[1]) > (img1.getImgHeight() * img1.getImgWidth() - 1)) {
+                    JOptionPane.showMessageDialog(null, "Stego key salah!", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    try {
+                        MPITSteganography mpit = new MPITSteganography();
+                        ImageProcessor img = new ImageProcessor(stegoImagePath);
+                        mpit.setCoverImage(img);
+                        String[] stegokey = stegoKeyTextField.getText().split("-");
+                        String result = mpit.extractSecretData(img, Integer.parseInt(stegokey[1]), Integer.parseInt(stegokey[0]));
+                        hasilEkstraksiTextArea.setText(result);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ExtractGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
+            } catch (IOException ex) {
+                Logger.getLogger(ExtractGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_prosesButtonMouseClicked
